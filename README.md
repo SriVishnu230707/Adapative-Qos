@@ -4,6 +4,9 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 
 ## Documentation
 
+- **[Requirements and acceptance checks](docs/requirements.md):** source-traced features, module responsibilities, verification procedures and initial project targets.
+- **[Implementation checklist](docs/implementation-checklist.md):** 16 ordered build steps with tasks, expected outputs and completion checks.
+- **[Detailed implementation plan](docs/implementation-plan.md):** architecture, module design, algorithms, experiments and acceptance evidence.
 - **[Computer networking learning map](docs/cn-learning/README.md):** a secondary README containing 67 connected topics, practical exercises, self-checks and project mappings.
 - **[Interactive learning mind map](docs/cn-learning/mindmap.html):** download the file and open it in a browser for clickable branches and browser-local learning progress.
 
@@ -16,4 +19,4 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 
 ## Current status
 
-This repository currently contains the networking learning guide and mind map. The QoS implementation and benchmark results are not included yet.
+Step 01 (requirements and acceptance checks) is complete. This repository currently contains the requirements, implementation roadmap, networking learning guide and mind map. The QoS implementation and benchmark results are not included yet.
