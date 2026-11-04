@@ -1,0 +1,759 @@
+{
+  "schema_version": 1,
+  "scope": "step-02 capabilities, not QoS acceptance or benchmark results",
+  "started_at_utc": "2026-11-03T20:31:10.033419+00:00",
+  "completed_at_utc": "2026-11-03T20:31:44.814125+00:00",
+  "status": "pass",
+  "reference_required": true,
+  "environment": {
+    "os_release": {
+      "PRETTY_NAME": "Ubuntu 24.04.5 LTS",
+      "NAME": "Ubuntu",
+      "VERSION_ID": "24.04",
+      "VERSION": "24.04.5 LTS (Noble Numbat)",
+      "VERSION_CODENAME": "noble",
+      "ID": "ubuntu",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "noble",
+      "LOGO": "ubuntu-logo"
+    },
+    "kernel": "6.8.0-147-generic",
+    "architecture": "x86_64",
+    "python": "3.12.3",
+    "logical_cpus": 4,
+    "virtualization": "oracle",
+    "container": "none",
+    "wsl": false,
+    "reference_profile": true,
+    "memory": {
+      "MemTotal": "3024080 kB",
+      "MemAvailable": "2655960 kB",
+      "SwapTotal": "0 kB"
+    },
+    "disk_free_bytes": 28048601088
+  },
+  "checks": [
+    {
+      "name": "privileges",
+      "status": "pass",
+      "detail": "effective UID 0; active operations stay inside owned namespaces"
+    },
+    {
+      "name": "reference_profile",
+      "status": "pass",
+      "detail": "Ubuntu 24.04.5 LTS; VM=oracle; container=none; WSL=False"
+    },
+    {
+      "name": "tool:git",
+      "status": "pass",
+      "detail": "git version 2.43.0"
+    },
+    {
+      "name": "tool:ip",
+      "status": "pass",
+      "detail": "ip utility, iproute2-6.1.0, libbpf 1.3.0"
+    },
+    {
+      "name": "tool:tc",
+      "status": "pass",
+      "detail": "tc utility, iproute2-6.1.0, libbpf 1.3.0"
+    },
+    {
+      "name": "tool:nft",
+      "status": "pass",
+      "detail": "nftables v1.0.9 (Old Doc Yak #3)"
+    },
+    {
+      "name": "tool:conntrack",
+      "status": "pass",
+      "detail": "conntrack v1.4.8 (conntrack-tools)"
+    },
+    {
+      "name": "tool:iperf3",
+      "status": "pass",
+      "detail": "iperf 3.16 (cJSON 1.7.15)\nLinux adaptive-qos-lab 6.8.0-147-generic #147-Ubuntu SMP PREEMPT_DYNAMIC Thu Sep 24 11:33:16 UTC 2026 x86_64\nOptional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads"
+    },
+    {
+      "name": "tool:ping",
+      "status": "pass",
+      "detail": "ping from iputils 20240117\nlibcap: yes, IDN: yes, NLS: no, error.h: yes, getrandom(): yes, __fpending(): yes"
+    },
+    {
+      "name": "tool:python3",
+      "status": "pass",
+      "detail": "Python 3.12.3"
+    },
+    {
+      "name": "tool:ethtool",
+      "status": "pass",
+      "detail": "ethtool version 6.7"
+    },
+    {
+      "name": "tool:jq",
+      "status": "pass",
+      "detail": "jq-1.7"
+    },
+    {
+      "name": "tool:mpstat",
+      "status": "pass",
+      "detail": "sysstat version 12.6.1\n(C) Sebastien Godard (sysstat <at> orange.fr)"
+    },
+    {
+      "name": "tool:modprobe",
+      "status": "pass",
+      "detail": "kmod version 31\n+ZSTD +XZ -ZLIB +LIBCRYPTO -EXPERIMENTAL"
+    },
+    {
+      "name": "tool:sysctl",
+      "status": "pass",
+      "detail": "sysctl from procps-ng 4.0.4"
+    },
+    {
+      "name": "python_venv",
+      "status": "pass",
+      "detail": "pip 24.0 from /tmp/aqpf-venv-0c263l24/lib/python3.12/site-packages/pip (python 3.12)"
+    },
+    {
+      "name": "planning_resources",
+      "status": "warn",
+      "detail": "Below the plan's 4-vCPU/6-GiB allocation; capability checks do not establish benchmark readiness"
+    },
+    {
+      "name": "package_versions",
+      "status": "pass",
+      "detail": "conntrack\t1:1.4.8-1ubuntu1\nethtool\t1:6.7-1build1\ngit\t1:2.43.0-1ubuntu7.4\niperf3\t3.16-1build2\niproute2\t6.1.0-1ubuntu6.4\niputils-ping\t3:20240117-1ubuntu0.1\njq\t1.7.1-3ubuntu0.24.04.2\nkmod\t31+20240202-2ubuntu7.2\nnftables\t1.0.9-1ubuntu0.1\nprocps\t2:4.0.4-4ubuntu3.3\npython3\t3.12.3-0ubuntu2.1\npython3-pip\t24.0+dfsg-1ubuntu1.3\npython3-venv\t3.12.3-0ubuntu2.1\nsysstat\t12.6.1-2\nutil-linux\t2.39.3-9ubuntu6.6"
+    },
+    {
+      "name": "namespace:aqpf-8fc34465d9-a",
+      "status": "pass",
+      "detail": "created; scheduled for cleanup"
+    },
+    {
+      "name": "namespace:aqpf-8fc34465d9-b",
+      "status": "pass",
+      "detail": "created; scheduled for cleanup"
+    },
+    {
+      "name": "veth",
+      "status": "pass",
+      "detail": "pair connects two owned namespaces; no host interface changed"
+    },
+    {
+      "name": "ipv4",
+      "status": "pass",
+      "detail": "PING 198.18.0.2 (198.18.0.2) 56(84) bytes of data.\n64 bytes from 198.18.0.2: icmp_seq=1 ttl=64 time=0.147 ms\n64 bytes from 198.18.0.2: icmp_seq=2 ttl=64 time=0.101 ms\n\n--- 198.18.0.2 ping statistics ---\n2 packets transmitted, 2 received, 0% packet loss, time 1075ms\nrtt min/avg/max/mdev = 0.101/0.124/0.147/0.023 ms"
+    },
+    {
+      "name": "ipv6",
+      "status": "pass",
+      "detail": "PING fd42:ad:2::2 (fd42:ad:2::2) 56 data bytes\n64 bytes from fd42:ad:2::2: icmp_seq=1 ttl=64 time=0.349 ms\n64 bytes from fd42:ad:2::2: icmp_seq=2 ttl=64 time=0.136 ms\n\n--- fd42:ad:2::2 ping statistics ---\n2 packets transmitted, 2 received, 0% packet loss, time 1056ms\nrtt min/avg/max/mdev = 0.136/0.242/0.349/0.106 ms"
+    },
+    {
+      "name": "namespace_forwarding",
+      "status": "pass",
+      "detail": "net.ipv4.ip_forward = 1\nnet.ipv6.conf.all.forwarding = 1"
+    },
+    {
+      "name": "qdisc:cake",
+      "status": "pass",
+      "detail": [
+        {
+          "kind": "cake",
+          "handle": "1:",
+          "root": true,
+          "refcnt": 5,
+          "options": {
+            "bandwidth": 1250000,
+            "diffserv": "besteffort",
+            "flowmode": "triple-isolate",
+            "nat": false,
+            "wash": false,
+            "ingress": false,
+            "ack-filter": "disabled",
+            "split_gso": true,
+            "rtt": 100000,
+            "raw": true,
+            "overhead": 0,
+            "fwmark": "0"
+          },
+          "bytes": 0,
+          "packets": 0,
+          "drops": 0,
+          "overlimits": 0,
+          "requeues": 0,
+          "backlog": 0,
+          "qlen": 0,
+          "memory_used": 0,
+          "memory_limit": 4194304,
+          "capacity_estimate": 1250000,
+          "min_network_size": 65535,
+          "max_network_size": 0,
+          "min_adj_size": 65535,
+          "max_adj_size": 0,
+          "avg_hdr_offset": 0,
+          "tins": [
+            {
+              "threshold_rate": 1250000,
+              "sent_bytes": 0,
+              "backlog_bytes": 0,
+              "target_us": 5000,
+              "interval_us": 100000,
+              "peak_delay_us": 0,
+              "avg_delay_us": 0,
+              "base_delay_us": 0,
+              "sent_packets": 0,
+              "way_indirect_hits": 0,
+              "way_misses": 0,
+              "way_collisions": 0,
+              "drops": 0,
+              "ecn_mark": 0,
+              "ack_drops": 0,
+              "sparse_flows": 0,
+              "bulk_flows": 0,
+              "unresponsive_flows": 0,
+              "max_pkt_len": 0,
+              "flow_quantum": 305
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "qdisc:fq_codel",
+      "status": "pass",
+      "detail": [
+        {
+          "kind": "fq_codel",
+          "handle": "2:",
+          "root": true,
+          "refcnt": 5,
+          "options": {
+            "limit": 10240,
+            "flows": 1024,
+            "quantum": 1514,
+            "target": 4999,
+            "interval": 99999,
+            "memory_limit": 33554432,
+            "ecn": true,
+            "drop_batch": 64
+          },
+          "bytes": 0,
+          "packets": 0,
+          "drops": 0,
+          "overlimits": 0,
+          "requeues": 0,
+          "backlog": 0,
+          "qlen": 0,
+          "maxpacket": 0,
+          "drop_overlimit": 0,
+          "new_flow_count": 0,
+          "ecn_mark": 0,
+          "new_flows_len": 0,
+          "old_flows_len": 0
+        }
+      ]
+    },
+    {
+      "name": "qdisc:htb",
+      "status": "pass",
+      "detail": [
+        {
+          "kind": "htb",
+          "handle": "3:",
+          "root": true,
+          "refcnt": 5,
+          "options": {
+            "r2q": 10,
+            "default": "0x10",
+            "direct_packets_stat": 0,
+            "direct_qlen": 1000
+          },
+          "bytes": 0,
+          "packets": 0,
+          "drops": 0,
+          "overlimits": 0,
+          "requeues": 0,
+          "backlog": 0,
+          "qlen": 0
+        }
+      ]
+    },
+    {
+      "name": "qdisc:netem",
+      "status": "pass",
+      "detail": [
+        {
+          "kind": "netem",
+          "handle": "4:",
+          "root": true,
+          "refcnt": 5,
+          "options": {
+            "limit": 1000,
+            "delay": {
+              "delay": 0.001,
+              "jitter": 0,
+              "correlation": 0
+            },
+            "ecn": false,
+            "gap": 0
+          },
+          "bytes": 0,
+          "packets": 0,
+          "drops": 0,
+          "overlimits": 0,
+          "requeues": 0,
+          "backlog": 0,
+          "qlen": 0
+        }
+      ]
+    },
+    {
+      "name": "ifb",
+      "status": "pass",
+      "detail": [
+        {
+          "ifindex": 4,
+          "ifname": "ifb0",
+          "flags": [
+            "BROADCAST",
+            "NOARP",
+            "UP",
+            "LOWER_UP"
+          ],
+          "mtu": 1500,
+          "qdisc": "fq_codel",
+          "operstate": "UNKNOWN",
+          "linkmode": "DEFAULT",
+          "group": "default",
+          "txqlen": 32,
+          "link_type": "ether",
+          "address": "aa:7d:4c:29:35:01",
+          "broadcast": "ff:ff:ff:ff:ff:ff"
+        }
+      ]
+    },
+    {
+      "name": "nftables_stateful_rule",
+      "status": "pass",
+      "detail": {
+        "nftables": [
+          {
+            "metainfo": {
+              "version": "1.0.9",
+              "release_name": "Old Doc Yak #3",
+              "json_schema_version": 1
+            }
+          },
+          {
+            "table": {
+              "family": "inet",
+              "name": "aqpf",
+              "handle": 3
+            }
+          },
+          {
+            "chain": {
+              "family": "inet",
+              "table": "aqpf",
+              "name": "output",
+              "handle": 1,
+              "type": "filter",
+              "hook": "output",
+              "prio": 0,
+              "policy": "accept"
+            }
+          },
+          {
+            "rule": {
+              "family": "inet",
+              "table": "aqpf",
+              "chain": "output",
+              "handle": 3,
+              "expr": [
+                {
+                  "match": {
+                    "op": "==",
+                    "left": {
+                      "ct": {
+                        "key": "state"
+                      }
+                    },
+                    "right": {
+                      "set": [
+                        "established",
+                        "related",
+                        "new"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "counter": {
+                    "packets": 0,
+                    "bytes": 0
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "conntrack_accounting",
+      "status": "pass",
+      "detail": [
+        "ipv4     2 icmp     1 29 src=198.18.0.1 dst=198.18.0.2 type=8 code=0 id=4242 packets=2 bytes=168 src=198.18.0.2 dst=198.18.0.1 type=0 code=0 id=4242 packets=2 bytes=168 mark=0 use=1"
+      ]
+    },
+    {
+      "name": "inspect:aqpf-8fc34465d9-a",
+      "status": "pass",
+      "detail": {
+        "links": [
+          {
+            "ifindex": 1,
+            "ifname": "lo",
+            "flags": [
+              "LOOPBACK",
+              "UP",
+              "LOWER_UP"
+            ],
+            "mtu": 65536,
+            "qdisc": "noqueue",
+            "operstate": "UNKNOWN",
+            "group": "default",
+            "txqlen": 1000,
+            "link_type": "loopback",
+            "address": "00:00:00:00:00:00",
+            "broadcast": "00:00:00:00:00:00",
+            "addr_info": [
+              {
+                "family": "inet",
+                "local": "127.0.0.1",
+                "prefixlen": 8,
+                "scope": "host",
+                "label": "lo",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              },
+              {
+                "family": "inet6",
+                "local": "::1",
+                "prefixlen": 128,
+                "scope": "host",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              }
+            ]
+          },
+          {
+            "ifindex": 3,
+            "link_index": 2,
+            "ifname": "q0",
+            "flags": [
+              "BROADCAST",
+              "MULTICAST",
+              "UP",
+              "LOWER_UP"
+            ],
+            "mtu": 1500,
+            "qdisc": "netem",
+            "operstate": "UP",
+            "group": "default",
+            "txqlen": 1000,
+            "link_type": "ether",
+            "address": "f6:94:05:ca:ec:c0",
+            "broadcast": "ff:ff:ff:ff:ff:ff",
+            "link_netnsid": 0,
+            "addr_info": [
+              {
+                "family": "inet",
+                "local": "198.18.0.1",
+                "prefixlen": 30,
+                "scope": "global",
+                "label": "q0",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              },
+              {
+                "family": "inet6",
+                "local": "fd42:ad:2::1",
+                "prefixlen": 64,
+                "scope": "global",
+                "nodad": true,
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              },
+              {
+                "family": "inet6",
+                "local": "fe80::f494:5ff:feca:ecc0",
+                "prefixlen": 64,
+                "scope": "link",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              }
+            ]
+          },
+          {
+            "ifindex": 4,
+            "ifname": "ifb0",
+            "flags": [
+              "BROADCAST",
+              "NOARP",
+              "UP",
+              "LOWER_UP"
+            ],
+            "mtu": 1500,
+            "qdisc": "fq_codel",
+            "operstate": "UNKNOWN",
+            "group": "default",
+            "txqlen": 32,
+            "link_type": "ether",
+            "address": "aa:7d:4c:29:35:01",
+            "broadcast": "ff:ff:ff:ff:ff:ff",
+            "addr_info": [
+              {
+                "family": "inet6",
+                "local": "fe80::a87d:4cff:fe29:3501",
+                "prefixlen": 64,
+                "scope": "link",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              }
+            ]
+          }
+        ],
+        "ipv4_routes": [
+          {
+            "dst": "198.18.0.0/30",
+            "dev": "q0",
+            "protocol": "kernel",
+            "scope": "link",
+            "prefsrc": "198.18.0.1",
+            "flags": []
+          }
+        ],
+        "ipv6_routes": [
+          {
+            "dst": "fd42:ad:2::/64",
+            "dev": "q0",
+            "protocol": "kernel",
+            "metric": 256,
+            "flags": [],
+            "pref": "medium"
+          },
+          {
+            "dst": "fe80::/64",
+            "dev": "q0",
+            "protocol": "kernel",
+            "metric": 256,
+            "flags": [],
+            "pref": "medium"
+          },
+          {
+            "dst": "fe80::/64",
+            "dev": "ifb0",
+            "protocol": "kernel",
+            "metric": 256,
+            "flags": [],
+            "pref": "medium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "inspect:aqpf-8fc34465d9-b",
+      "status": "pass",
+      "detail": {
+        "links": [
+          {
+            "ifindex": 1,
+            "ifname": "lo",
+            "flags": [
+              "LOOPBACK",
+              "UP",
+              "LOWER_UP"
+            ],
+            "mtu": 65536,
+            "qdisc": "noqueue",
+            "operstate": "UNKNOWN",
+            "group": "default",
+            "txqlen": 1000,
+            "link_type": "loopback",
+            "address": "00:00:00:00:00:00",
+            "broadcast": "00:00:00:00:00:00",
+            "addr_info": [
+              {
+                "family": "inet",
+                "local": "127.0.0.1",
+                "prefixlen": 8,
+                "scope": "host",
+                "label": "lo",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              },
+              {
+                "family": "inet6",
+                "local": "::1",
+                "prefixlen": 128,
+                "scope": "host",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              }
+            ]
+          },
+          {
+            "ifindex": 2,
+            "link_index": 3,
+            "ifname": "q1",
+            "flags": [
+              "BROADCAST",
+              "MULTICAST",
+              "UP",
+              "LOWER_UP"
+            ],
+            "mtu": 1500,
+            "qdisc": "noqueue",
+            "operstate": "UP",
+            "group": "default",
+            "txqlen": 1000,
+            "link_type": "ether",
+            "address": "5a:64:95:61:8c:8b",
+            "broadcast": "ff:ff:ff:ff:ff:ff",
+            "link_netnsid": 0,
+            "addr_info": [
+              {
+                "family": "inet",
+                "local": "198.18.0.2",
+                "prefixlen": 30,
+                "scope": "global",
+                "label": "q1",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              },
+              {
+                "family": "inet6",
+                "local": "fd42:ad:2::2",
+                "prefixlen": 64,
+                "scope": "global",
+                "nodad": true,
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              },
+              {
+                "family": "inet6",
+                "local": "fe80::5864:95ff:fe61:8c8b",
+                "prefixlen": 64,
+                "scope": "link",
+                "valid_life_time": 4294967295,
+                "preferred_life_time": 4294967295
+              }
+            ]
+          }
+        ],
+        "ipv4_routes": [
+          {
+            "dst": "198.18.0.0/30",
+            "dev": "q1",
+            "protocol": "kernel",
+            "scope": "link",
+            "prefsrc": "198.18.0.2",
+            "flags": []
+          }
+        ],
+        "ipv6_routes": [
+          {
+            "dst": "fd42:ad:2::/64",
+            "dev": "q1",
+            "protocol": "kernel",
+            "metric": 256,
+            "flags": [],
+            "pref": "medium"
+          },
+          {
+            "dst": "fe80::/64",
+            "dev": "q1",
+            "protocol": "kernel",
+            "metric": 256,
+            "flags": [],
+            "pref": "medium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "cleanup:aqpf-8fc34465d9-b",
+      "status": "pass",
+      "detail": "removed and verified absent"
+    },
+    {
+      "name": "cleanup:aqpf-8fc34465d9-a",
+      "status": "pass",
+      "detail": "removed and verified absent"
+    }
+  ],
+  "owned_namespaces": [
+    "aqpf-8fc34465d9-a",
+    "aqpf-8fc34465d9-b"
+  ],
+  "script_sha256": {
+    "preflight.sh": "4592a36cfb1f20ca12993f244c98fc1b75a3a03a52dc2267adfd10391989b913",
+    "preflight.py": "882fde6d7260e29dc2509cd531ce4124793d2116663437a3c6eb8854929391d7",
+    "install-tools.sh": "89a6f2eaeab5a896b8f377b4a5593b177ce5baf4f4d20effd6095f79653f3d55"
+  },
+  "provisioning": {
+    "client_date": "2026-11-04",
+    "host_os": "Windows 11 Home Single Language 10.0.26200 x86-64",
+    "host_shell": "PowerShell 7.6.5",
+    "hypervisor": "Oracle VirtualBox 7.2.10r174163",
+    "vm_name": "adaptive-qos-ubuntu-24.04",
+    "vcpus": 4,
+    "memory_mib": 3072,
+    "disk_capacity_mib": 30720,
+    "disk_format": "VDI, dynamic allocation",
+    "firmware": "EFI",
+    "network": "virtio adapter using VirtualBox NAT",
+    "ssh_endpoint": "127.0.0.1:2222",
+    "authentication": "dedicated local Ed25519 key; password authentication disabled; key data excluded from this manifest",
+    "image": {
+      "url": "https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.vmdk",
+      "release_build": "20261017",
+      "sha256": "9a1e3959c9f4ad9d4752101fd4ff9a43191fb7d72e61fa20e033f9fd235ce794",
+      "checksum_source": "https://cloud-images.ubuntu.com/releases/noble/release/SHA256SUMS",
+      "verification": "downloaded image matched SHA256SUMS retrieved over HTTPS"
+    },
+    "source_base_commit": "98f75bc5ad62692014a119e3e6ed1194b0be42f2",
+    "source_note": "Step-02 files were uncommitted at verification; exact executed script hashes are recorded above."
+  },
+  "verification_notes": [
+    "Five privilege/cleanup/timeout safety tests passed on the Windows bundled Python runtime.",
+    "The initial first-boot probe reused a queue handle across different kinds and failed three qdisc checks. Distinct handles fixed the probe; the corrected Linux run passed.",
+    "The failed first-boot report is retained in the VM at /opt/adaptive-qos/work/preflight/first-boot-failed.json.",
+    "Three-GiB memory allocation is below the plan estimate and is recorded as a warning, not a benchmark readiness claim.",
+    "QoS requirements T01-T16 remain Not run; this report covers step-02 environment capabilities only.",
+    "Corrected bootstrap was successfully replayed using cloud-init single --name scripts_user --frequency always, followed by a clean VM reboot.",
+    "This capability snapshot was recorded after that reboot; cloud-init reported done with no errors or recoverable errors.",
+    "The dedicated project tree is owned by qos; a temporary development write/remove check passed as that account."
+  ],
+  "bootstrap_health": {
+    "verified_after_reboot": true,
+    "status": "done",
+    "extended_status": "done",
+    "errors": [],
+    "recoverable_errors": {},
+    "cloud_final_unit": "active (exited); Result=success",
+    "developer_write_check": "pass",
+    "workspace_owner": "qos",
+    "guest_uid": 1000,
+    "python_build": [
+      "main",
+      "Aug 31 2026 10:18:26"
+    ],
+    "python_compiler": "GCC 13.3.0"
+  }
+}
