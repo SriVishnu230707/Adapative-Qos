@@ -243,7 +243,7 @@ results/<scenario>/<mode>/<run-id>/
 
 An acceptance entry must identify requirement IDs, test ID, configuration/target version, run IDs, status, actual measurements, reason and evidence paths. Valid runtime statuses are **Not run**, **Pass**, **Fail**, **Blocked** (with failed prerequisite), and **Not applicable** (only with a justified condition such as no AI). Missing required evidence cannot be replaced with a screenshot or a claim. Documentation and repository-review checks may use a dedicated review run ID.
 
-**Current implementation status:** R01-R21 are specified; T01-T16 are **Not run**; no benchmark or runtime capability is claimed. R21 is planned as conditional and can be marked not applicable in the eventual deterministic release. IPv6 availability must be determined by step-02 preflight. All proposed scripts, implementation modules and result artifacts still need to be built.
+**Current implementation status:** R01-R21 are specified; full QoS acceptance procedures T01-T16 are **Not run**. The Linux environment and phase-3 shared package/configuration contracts are implemented and have separate verification records. IPv6 capability was verified in preflight; complete gateway IPv6 enforcement remains part of later integration checks. The observer/classifier/estimator algorithms, actuator, watchdog, intent service, dashboard and benchmark evidence still need implementation. R21 is conditional and can be marked not applicable in the eventual deterministic release.
 
 **Step-01 documentation gate:**
 
@@ -253,4 +253,4 @@ An acceptance entry must identify requirement IDs, test ID, configuration/target
 - [x] Required behavior is separated from tool choices, optional extensions and numerical project targets.
 - [x] Metric meanings, negative/failure checks, module contracts and evidence status are defined without invented results.
 
-Step 01 is complete when these documentation checks are reviewed. Passing them does not satisfy the later implementation acceptance checks. The next checklist task is **step 02: set up and verify the Linux development environment**.
+Step 01 is complete when these documentation checks are reviewed. Passing them does not satisfy the later implementation acceptance checks. Consult the implementation checklist for current build progress.

@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "verified_at_utc": "2026-11-04T15:26:06.469295+00:00",
+  "scope": "checklist step 03 package, records and configuration; no QoS benchmark claim",
+  "environment": {
+    "system": "Linux",
+    "kernel": "6.8.0-147-generic",
+    "python": "3.12.3",
+    "vcpus": 1,
+    "uid": 1000,
+    "memory": {
+      "MemTotal": "3025144 kB",
+      "MemAvailable": "2687452 kB",
+      "SwapTotal": "0 kB"
+    }
+  },
+  "pytest": {
+    "tests": 119,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 119
+  },
+  "source_base_revision": "e97e7137283432726003db88341885aca0da679a",
+  "source_code_sha256": {
+    ".gitattributes": "528d33ba751daac798e69ab5d8a07058fe082b27d6cef55b244bfceba42cfea6",
+    "MANIFEST.in": "7be09e34fe6f49387673351790235af71f159a7742f150c02655923787e479ab",
+    "configs/controller.yaml": "76b11083d18127ff997d85a063b1787665c2d90a4840992f725b4623ff3454d7",
+    "configs/lab.yaml": "fee509b518fe6ec7301f390b13ace3c6652fc165e41395936f5595d540d7896c",
+    "configs/safe-policy.yaml": "a06004882a92d3d68b81206d76197b002c57179aa41e049657d039a2b80e3f0a",
+    "examples/contracts/generate.py": "3be2dabd6d14744d1f02a9ae7a6b8f1baff327f1ed6673c8371fa95a65c48026",
+    "examples/contracts/invalid/address-family.json": "4cd965a506d0c9f832d8044c330a48a7e5107d0390707c8105dce1f2f7d3e8f3",
+    "examples/contracts/invalid/boolean-rate.json": "0eb0457d1ab67ef2174a6c75586cbe25d388c55a3bfd50f910cf081c4a7ddbda",
+    "examples/contracts/invalid/boolean-schema.json": "29658e0dab5dc7a4241a9ffd9e9da91c283823f1f1e8b1822ef4e02dfd7caf60",
+    "examples/contracts/invalid/expired-active-intent.json": "644f490567bd857c985793faeba2368165b515e809156623df3d65ff2a8aa20f",
+    "examples/contracts/invalid/expired-policy.json": "278b43b094c74b9c429f78881f81ed8f55642835e3acd975f3d1bde56e87c087",
+    "examples/contracts/invalid/fixture-kernel-result.json": "2dfbfc6c1cf009ce50fe00289192c6f99292e1737cf252cd7069d3e0ec5ccded",
+    "examples/contracts/invalid/idle-capacity-confidence.json": "2d28f9a84b0d7112ef91553544e59ab2a3908931df0f2b1f64c957464342661e",
+    "examples/contracts/invalid/index.json": "3a4be317c82c0ccaa53ce61a5dd09614c118e14082bce47f58830dd039f8af3d",
+    "examples/contracts/invalid/metric-unit.json": "b0b25bcb23ef2e1d9f58a8562bfa9ef60773cc6941ae399a4dfc04563f0824ee",
+    "examples/contracts/invalid/missing-counter.json": "26a795f42c350b552d8cf479ee7faff7d6f7ebbc145666a0388ff197bffcaf94",
+    "examples/contracts/invalid/negative-rate.json": "cadf4390ce10827a0e2f6113ca31260bcb37cfc851896944e020f80d00aa7d4f",
+    "examples/contracts/invalid/partial-as-verified.json": "8a370054b0b063a29e861e9e62fc3f7cbc9c5aea6fc158fb1e364792613b9eda",
+    "examples/contracts/invalid/reversed-window.json": "6e44cb1fef66393c7f543dffe954dc5495e52e83e528171601415c0781e1d606",
+    "examples/contracts/invalid/schema-version.json": "c301ab022e54287a5e997152e1288d092a7cbdf62dbbb984d72e83d272548860",
+    "examples/contracts/invalid/string-rate.json": "fe20d19bd0418d133e354271bbb2df8bf786eb522cad2397cd875f4c6e7caf83",
+    "examples/contracts/invalid/truth-leak.json": "86af7569cefce367bcaee94d7a8431f2475f6a9f7c62bb40d4fdafbdf6603228",
+    "examples/contracts/invalid/unknown-confidence.json": "94f2080d86d817af53fbecc743cce48e9727e38c58bedf8e43be6e1f9ac47c8a",
+    "examples/contracts/README.md": "c0e1ec0cc0b343bdeb994aa32abce312b9122dc0a78badda55efbc3fdf4329c9",
+    "examples/contracts/valid/apply-result.json": "eaec4afe53e44e8af7f7333f0e3bfde9b3e886357ba8df0a7dc813505a70fb5e",
+    "examples/contracts/valid/classification.json": "351c90e06a5bde08708d1de2f84131830c21e308902d044720a81ec2d1ec4804",
+    "examples/contracts/valid/event.json": "a3d4b88c2dec2248c0b40f9a6e9a793b89340abb531868d680dc95b5930f7f4b",
+    "examples/contracts/valid/flow-window.json": "25cb0257f48176eb3a4da7e8bb88a15d027672c1d0a370075b3214d23399c3e2",
+    "examples/contracts/valid/intent.json": "5d07f1241244a3acee48e055289bcf55d89d334c53fbd7754b207d4325fc86fc",
+    "examples/contracts/valid/link-download.json": "11098a913e40f906602369a35efa28eeb8d98cd2e4224fee8e5f19b6f7c9af33",
+    "examples/contracts/valid/link-upload.json": "91d9d8d46d6437a7f1ab6b28170eaaed13a248c40b4f4637f5fedad760aede72",
+    "examples/contracts/valid/metric-sample.json": "78d028864ddff042dc98103f793570d1fc12fe14ca368f14f8d4f836a62f7049",
+    "examples/contracts/valid/policy.json": "adddddd4bf6e7ea807d2641fbf907b5d9b3b78410e1b805368b52ec13bb11786",
+    "lab/create-seed.py": "14807947a704a79256d2b0933fb7035a140b2a5a90c1071f32b6aa9f99225681",
+    "lab/export-source.py": "5e0bb01fbbdd2211d01814012d62f4d5ecaf524b151a25b6c05391c862982d84",
+    "lab/install-tools.sh": "89a6f2eaeab5a896b8f377b4a5593b177ce5baf4f4d20effd6095f79653f3d55",
+    "lab/preflight.py": "882fde6d7260e29dc2509cd531ce4124793d2116663437a3c6eb8854929391d7",
+    "lab/preflight.sh": "4592a36cfb1f20ca12993f244c98fc1b75a3a03a52dc2267adfd10391989b913",
+    "pyproject.toml": "94267965a62d31fe941c22af43e151596a6a01fbec39ba00f4b2b5ec7b0fb33a",
+    "requirements/dev.txt": "07c1f9bc2d7059ec2b26b707ffc9ffd4992c4a83688b89b1a01b4244f3671b1a",
+    "requirements/runtime.txt": "07c5fc67036bf1293c7ab07aa3ad0d8652dde5ef3ec4eae26bfe5a36a37f4038",
+    "src/adaptive_qos/__init__.py": "18d911827ef32c3e5d6e211061532c8a450ebe569eda613f8f7542c78fad2f30",
+    "src/adaptive_qos/__main__.py": "f3e47c3bc304566ef1c540a2cd68ab8f19e436320d3ecc5ce92353f2b63b7371",
+    "src/adaptive_qos/cli.py": "94376bd0ad84e7e8f6669cd00c611c6039e9ef65918a434e9e01f82d86595663",
+    "src/adaptive_qos/clock.py": "8c9345728838446c96a9581a2b50c060dfef4f7ed95a3417d4a591742ff3dd03",
+    "src/adaptive_qos/config.py": "e690daa60bbdb26db207fbdfe56f1031223fb27fba6a44bef18b6a5b21b27daf",
+    "src/adaptive_qos/contracts.py": "a27e5613c4355ed32db9132ebe073ab57e4722116b4904205ae6417890f02c01",
+    "src/adaptive_qos/models.py": "9c519ea4789c4ea6d79e505e5916bbf5ea2ae40a309466191cd00fd62c6ecd15",
+    "src/adaptive_qos/validation.py": "322ed83a00bceb8f6f051f9e7230ba0941164a93faa2d2c362166f57ccb9fd4a",
+    "tests/conftest.py": "d64248dc7900dff407f4607ef1a04acb255eda13d9249602bb4232ebeb4eb97f",
+    "tests/integration/README.md": "94b70953c2eea54aa9a79710bc388bdef185527255af533c75f65b18d50c26a7",
+    "tests/test_preflight.py": "e605137885916717a51e2e448b6145cfab0348011fca1cec37217e121a39c6fe",
+    "tests/unit/test_cli_contracts.py": "953c3d51a9f5c6b0dcd79e10439a3112ed15673f716959755fd9bda1b47e63b8",
+    "tests/unit/test_clock_context.py": "caaa5e525de9a70ea249cc495bbea8e6ecd065c67586b934afb742a3480d1f5c",
+    "tests/unit/test_config.py": "da31b2a2cba76bff77bd57535827bd936e601df41eef11bed454213b0badb931",
+    "tests/unit/test_models.py": "4df18fc02b97f801193c0620f2c1c81307f4b11ebc65bcfab7562ab164a8c145",
+    "tests/unit/test_source_export.py": "28a297eea8db4a7d1f124a983250bde9404fa798a47438eb6e19c6b6240bf464"
+  },
+  "dependencies": [
+    {
+      "name": "adaptive-qos",
+      "version": "0.1.0"
+    },
+    {
+      "name": "adaptive-qos",
+      "version": "0.1.0"
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0"
+    },
+    {
+      "name": "build",
+      "version": "1.6.1"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3"
+    },
+    {
+      "name": "pip",
+      "version": "24.0"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.7.0"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.2"
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.50.2"
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0"
+    },
+    {
+      "name": "pyproject_hooks",
+      "version": "1.3.3"
+    },
+    {
+      "name": "pytest",
+      "version": "9.2.0"
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3"
+    },
+    {
+      "name": "setuptools",
+      "version": "82.0.1"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.5"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "name": "wheel",
+      "version": "0.48.0"
+    }
+  ],
+  "editable_config": {
+    "status": "pass",
+    "scope": "offline_setup",
+    "effective_sha256": "29113c41e203260bdfdda08e8db859ed8fb2a70ef916a403ef631cad02468550",
+    "source_files": [
+      {
+        "filename": "controller.yaml",
+        "sha256": "76b11083d18127ff997d85a063b1787665c2d90a4840992f725b4623ff3454d7"
+      },
+      {
+        "filename": "safe-policy.yaml",
+        "sha256": "a06004882a92d3d68b81206d76197b002c57179aa41e049657d039a2b80e3f0a"
+      }
+    ],
+    "network_changes": false
+  },
+  "editable_contracts": {
+    "status": "pass",
+    "scope": "synthetic contract examples; no QoS benchmark or enforcement claim",
+    "valid_records": 9,
+    "record_types": {
+      "apply_result": 1,
+      "classification": 1,
+      "event": 1,
+      "flow_window": 1,
+      "intent": 1,
+      "link_estimate": 2,
+      "metric_sample": 1,
+      "policy": 1
+    },
+    "invalid_records_rejected": 16,
+    "runtime_settings_sha256": "29113c41e203260bdfdda08e8db859ed8fb2a70ef916a403ef631cad02468550",
+    "replay": {
+      "execution": "simulated",
+      "network_changes": false,
+      "upload_observed_rate_bps": 2000000.0,
+      "download_observed_rate_bps": 8000000.0,
+      "estimated_capacity_bps": {
+        "download": null,
+        "upload": null
+      },
+      "predicted_category": "bulk_like",
+      "corrected_category": "interactive_like",
+      "effective_service_class": "interactive",
+      "intent_expired": true,
+      "policy_expired": true,
+      "observation_stale": true
+    }
+  },
+  "wheel_smoke": {
+    "status": "pass",
+    "module_path": "/opt/adaptive-qos/work/step03/wheel-env-lt0vss71/lib/python3.12/site-packages/adaptive_qos/__init__.py",
+    "prefix": "/opt/adaptive-qos/work/step03/wheel-env-lt0vss71",
+    "cwd": "/home/qos/aqos-wheel-cwd-vjf11yzp",
+    "version": "0.1.0",
+    "valid_records": 9,
+    "invalid_records_rejected": 16
+  },
+  "wheel_config": {
+    "status": "pass",
+    "scope": "offline_setup",
+    "effective_sha256": "29113c41e203260bdfdda08e8db859ed8fb2a70ef916a403ef631cad02468550",
+    "source_files": [
+      {
+        "filename": "controller.yaml",
+        "sha256": "76b11083d18127ff997d85a063b1787665c2d90a4840992f725b4623ff3454d7"
+      },
+      {
+        "filename": "safe-policy.yaml",
+        "sha256": "a06004882a92d3d68b81206d76197b002c57179aa41e049657d039a2b80e3f0a"
+      }
+    ],
+    "network_changes": false
+  },
+  "wheel_contracts": {
+    "status": "pass",
+    "scope": "synthetic contract examples; no QoS benchmark or enforcement claim",
+    "valid_records": 9,
+    "record_types": {
+      "apply_result": 1,
+      "classification": 1,
+      "event": 1,
+      "flow_window": 1,
+      "intent": 1,
+      "link_estimate": 2,
+      "metric_sample": 1,
+      "policy": 1
+    },
+    "invalid_records_rejected": 16,
+    "runtime_settings_sha256": "29113c41e203260bdfdda08e8db859ed8fb2a70ef916a403ef631cad02468550",
+    "replay": {
+      "execution": "simulated",
+      "network_changes": false,
+      "upload_observed_rate_bps": 2000000.0,
+      "download_observed_rate_bps": 8000000.0,
+      "estimated_capacity_bps": {
+        "download": null,
+        "upload": null
+      },
+      "predicted_category": "bulk_like",
+      "corrected_category": "interactive_like",
+      "effective_service_class": "interactive",
+      "intent_expired": true,
+      "policy_expired": true,
+      "observation_stale": true
+    }
+  },
+  "wheel": {
+    "filename": "adaptive_qos-0.1.0-py3-none-any.whl",
+    "sha256": "e0fda0fa4c6ef6ffec338eebe940e2ebbbb659c726449e93076439a8b6882845",
+    "bytes": 19231
+  },
+  "standalone_preflight": {
+    "status": "pass",
+    "passed": 34,
+    "warnings": [
+      {
+        "name": "planning_resources",
+        "status": "warn",
+        "detail": "Below the plan's 4-vCPU/6-GiB allocation; capability checks do not establish benchmark readiness"
+      }
+    ],
+    "script_sha256": {
+      "preflight.sh": "4592a36cfb1f20ca12993f244c98fc1b75a3a03a52dc2267adfd10391989b913",
+      "preflight.py": "882fde6d7260e29dc2509cd531ce4124793d2116663437a3c6eb8854929391d7",
+      "install-tools.sh": "89a6f2eaeab5a896b8f377b4a5593b177ce5baf4f4d20effd6095f79653f3d55"
+    }
+  },
+  "checks": [
+    "source snapshot hashes",
+    "pinned dependency consistency",
+    "unit suite",
+    "editable CLI configuration and contract replay",
+    "independent system-Python preflight",
+    "sdist contents",
+    "built wheel fresh install",
+    "outside-source isolated imports and CLI",
+    "console entry point"
+  ],
+  "notes": [
+    "VM recovered from an early-boot clock stall by changing from four virtual CPUs to one. This run records the actual one-CPU profile.",
+    "The 3-GiB allocation remains below the adjustable planning estimate.",
+    "Apply results and example records are explicitly simulated. Full QoS acceptance T01-T16 remains unrun.",
+    "Source checksum list covers code, configuration, fixtures, tests and build inputs. Progress documentation and this record are maintained separately."
+  ],
+  "windows": {
+    "system": "Windows",
+    "python": "3.12.14",
+    "pytest": {
+      "tests": 119,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "passed": 118
+    },
+    "skips": [
+      {
+        "test": "test_source_verifier_rejects_symlinked_parent",
+        "reason": "creating symlinks requires additional Windows privileges"
+      }
+    ],
+    "dependency_consistency": "pip check passed"
+  }
+}

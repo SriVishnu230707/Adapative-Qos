@@ -4,7 +4,7 @@
 
 Implement these steps in order. Each step produces something you can inspect or run. Advance after its completion check passes.
 
-This is a task breakdown for the proposed implementation. The repository currently contains documentation; the source files and scripts named below still need to be created. Step 01 is complete as documentation; implementation tasks and runtime acceptance checks remain uncompleted. Linux CAKE, Python, nftables and conntrack are recommended choices; they are not additional requirements imposed by the problem statement.
+This is a task breakdown for the proposed implementation. Steps 01-03 are complete: requirements, the Linux environment and the shared contract package are implemented and verified. Most networking/algorithm modules named below still need to be created, and QoS runtime acceptance checks remain unrun. Linux CAKE, Python, nftables and conntrack are project choices; they are not additional requirements imposed by the problem statement.
 
 <a name="step-01"></a>
 
@@ -27,12 +27,14 @@ This is a task breakdown for the proposed implementation. The repository current
 
 **02. Set up the Linux development environment**
 
-- [ ] Create the Ubuntu reference VM and install the tools listed in the detailed plan.
-- [ ] Verify network namespaces, CAKE, conntrack, nftables and required privileges.
-- [ ] Record actual OS, kernel, tool and Python versions.
-- [ ] Write a preflight script that reports missing capabilities clearly.
+- [x] Create the Ubuntu reference VM and install the tools listed in the detailed plan.
+- [x] Verify network namespaces, CAKE, conntrack, nftables and required privileges.
+- [x] Record actual OS, kernel, tool and Python versions.
+- [x] Write a preflight script that reports missing capabilities clearly.
 
-**Output:** `lab/preflight.sh`, an environment manifest and initial `docs/setup.md`.
+**Output:** [Preflight entry point](../lab/preflight.sh), [measured environment manifest](environments/ubuntu-24.04-virtualbox.json) and [setup guide](setup.md).
+
+**Status:** complete on 4 November 2026. Ubuntu 24.04.5 / kernel `6.8.0-147-generic` passed 34 capability checks, with one warning for 3 GiB RAM versus the plan's adjustable allocation. Five preflight safety tests passed. The requirements' QoS acceptance procedures T01-T16 remain **Not run**.
 
 **Complete when:** preflight passes and the environment can create an isolated namespace and inspect its interfaces/routes.
 
@@ -42,13 +44,15 @@ This is a task breakdown for the proposed implementation. The repository current
 
 **03. Create the project skeleton and shared data contracts**
 
-- [ ] Create `src/adaptive_qos/`, `configs/`, `lab/`, `workloads/`, `experiments/`, `tests/` and `ui/`.
-- [ ] Set up a Python virtual environment and package configuration.
-- [ ] Define `FlowWindow`, `Classification`, `LinkEstimate`, `Intent`, `Policy`, `ApplyResult`, `MetricSample` and `Event` records.
-- [ ] Include timestamps, units, freshness, schema versions and explicit unavailable values.
-- [ ] Separate lab configuration, controller bounds and the safe policy.
+- [x] Create `src/adaptive_qos/`, `configs/`, `lab/`, `workloads/`, `experiments/`, `tests/` and `ui/`.
+- [x] Set up a Python virtual environment and package configuration.
+- [x] Define `FlowWindow`, `Classification`, `LinkEstimate`, `Intent`, `Policy`, `ApplyResult`, `MetricSample` and `Event` records.
+- [x] Include timestamps, units, freshness, schema versions and explicit unavailable values.
+- [x] Separate lab configuration, controller bounds and the safe policy.
 
-**Output:** `pyproject.toml`, `src/adaptive_qos/models.py` and configuration files.
+**Output:** [Package configuration](../pyproject.toml), [shared models](../src/adaptive_qos/models.py), [configuration loader](../src/adaptive_qos/config.py), [development guide](development.md) and [verification record](environments/phase-03-verification.json).
+
+**Status:** complete on 4 November 2026. Nine labeled synthetic records cover eight types; 16 invalid examples are rejected. Ubuntu passed 119 tests, Windows passed 118 with one symlink-permission skip, and the built wheel passed a fresh-environment check outside the source tree. The standalone preflight remains independent of the application dependencies. These are phase-3 contract checks, not the full QoS acceptance experiments.
 
 **Complete when:** modules can exchange validated example records without relying on ad hoc dictionaries or ambiguous units.
 

@@ -1,0 +1,12 @@
+# Proposed fallback for the declared lab envelope; performance remains to be tested.
+schema_version: 1
+mode: safe
+upload_shaper_rate_bps: 3000000
+download_shaper_rate_bps: 15000000
+default_service_class: best_effort
+host_isolation: triple-isolate
+temporary_grants_allowed: false
+assumptions:
+  minimum_supported_download_rate_bps: 20000000
+  minimum_supported_upload_rate_bps: 5000000
+  source: declared_lab_envelope

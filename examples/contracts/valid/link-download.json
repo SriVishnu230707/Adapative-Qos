@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "record_type": "link_estimate",
+  "record_id": "record-link-download",
+  "run_id": "fixture-run-1",
+  "producer_instance_id": "fixture-producer-1",
+  "sequence": 5,
+  "boot_id": "fixture-boot-1",
+  "created_at_utc": "2026-11-04T00:00:02Z",
+  "observed_mono_ns": 2000000000,
+  "source_kind": "synthetic_fixture",
+  "direction": "download",
+  "observed_rate_bps": 8000000.0,
+  "observed_rate_source": "synthetic_fixture",
+  "estimated_capacity_bps": null,
+  "capacity_lower_bound_bps": 8000000.0,
+  "capacity_upper_bound_bps": null,
+  "estimate_source": "unavailable",
+  "unavailable_reason": "demand_limited",
+  "recommended_shaper_rate_bps": 90000000,
+  "rate_recommendation_source": "configured_start",
+  "confidence_grade": "unavailable",
+  "load_state": "demand_limited",
+  "probe_health": "healthy",
+  "input_record_ids": [
+    "record-flow-1",
+    "record-metric-1"
+  ],
+  "reasons": [
+    "demand_limited",
+    "configured_start"
+  ],
+  "valid_for_ms": 2500
+}

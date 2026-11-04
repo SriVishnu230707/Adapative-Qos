@@ -1,0 +1,7 @@
+recursive-include configs *.yaml
+recursive-include examples *.json *.md *.py
+recursive-include tests *.py *.md
+recursive-include requirements *.txt
+recursive-include lab *.py *.sh
+recursive-include docs *.md *.html
+global-exclude __pycache__ *.py[cod]

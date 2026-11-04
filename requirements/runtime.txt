@@ -1,0 +1,7 @@
+# Resolved and tested with Python 3.12; wheel selection remains platform-specific.
+annotated-types==0.8.0
+pydantic==2.14.2
+pydantic-core==2.50.2
+PyYAML==6.0.3
+typing-extensions==4.16.0
+typing-inspection==0.4.5

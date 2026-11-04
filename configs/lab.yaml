@@ -1,0 +1,24 @@
+# Runner/evaluator input only. Do not give the controller this file or model.
+schema_version: 1
+namespaces: [qos-client, qos-gw, qos-isp, qos-server]
+gateway:
+  namespace: qos-gw
+  upload_interface: wan0
+  download_interface: lan0
+links:
+  - name: client-gateway
+    a: {namespace: qos-client, interface: c0, ipv4_cidr: 10.10.0.2/24, ipv6_cidr: 'fd42:ad:10::2/64'}
+    b: {namespace: qos-gw, interface: lan0, ipv4_cidr: 10.10.0.1/24, ipv6_cidr: 'fd42:ad:10::1/64'}
+  - name: gateway-isp
+    a: {namespace: qos-gw, interface: wan0, ipv4_cidr: 10.20.0.1/30, ipv6_cidr: 'fd42:ad:20::1/64'}
+    b: {namespace: qos-isp, interface: gw0, ipv4_cidr: 10.20.0.2/30, ipv6_cidr: 'fd42:ad:20::2/64'}
+  - name: isp-server
+    a: {namespace: qos-isp, interface: srv0, ipv4_cidr: 10.30.0.1/24, ipv6_cidr: 'fd42:ad:30::1/64'}
+    b: {namespace: qos-server, interface: s0, ipv4_cidr: 10.30.0.2/24, ipv6_cidr: 'fd42:ad:30::2/64'}
+emulator:
+  initial_download_rate_bps: 100000000
+  initial_upload_rate_bps: 20000000
+  minimum_supported_download_rate_bps: 20000000
+  minimum_supported_upload_rate_bps: 5000000
+  queue_limit_packets: 1000
+synthetic_traffic: true

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "record_type": "classification",
+  "record_id": "record-classification-1",
+  "run_id": "fixture-run-1",
+  "producer_instance_id": "fixture-producer-1",
+  "sequence": 2,
+  "boot_id": "fixture-boot-1",
+  "created_at_utc": "2026-11-04T00:00:02Z",
+  "observed_mono_ns": 2000000000,
+  "source_kind": "synthetic_fixture",
+  "flow_id": "flow-1",
+  "window_id": "window-1",
+  "predicted_category": "unknown",
+  "confidence_grade": "medium",
+  "reasons": [
+    "synthetic_example"
+  ],
+  "classifier_version": "fixture-rules-v1",
+  "valid_for_ms": 2500
+}

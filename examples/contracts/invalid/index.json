@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "filename": "negative-rate.json",
+      "expected_fragment": "greater than 0"
+    },
+    {
+      "filename": "boolean-rate.json",
+      "expected_fragment": "valid integer"
+    },
+    {
+      "filename": "string-rate.json",
+      "expected_fragment": "valid integer"
+    },
+    {
+      "filename": "truth-leak.json",
+      "expected_fragment": "extra inputs"
+    },
+    {
+      "filename": "reversed-window.json",
+      "expected_fragment": "positive duration"
+    },
+    {
+      "filename": "missing-counter.json",
+      "expected_fragment": "available together"
+    },
+    {
+      "filename": "unknown-confidence.json",
+      "expected_fragment": "unavailable confidence"
+    },
+    {
+      "filename": "idle-capacity-confidence.json",
+      "expected_fragment": "cannot justify high confidence"
+    },
+    {
+      "filename": "expired-active-intent.json",
+      "expected_fragment": "already expired"
+    },
+    {
+      "filename": "partial-as-verified.json",
+      "expected_fragment": "all three verified"
+    },
+    {
+      "filename": "metric-unit.json",
+      "expected_fragment": "unit does not match"
+    },
+    {
+      "filename": "address-family.json",
+      "expected_fragment": "match address_family"
+    },
+    {
+      "filename": "expired-policy.json",
+      "expected_fragment": "future finite lease"
+    },
+    {
+      "filename": "fixture-kernel-result.json",
+      "expected_fragment": "must be simulated"
+    },
+    {
+      "filename": "schema-version.json",
+      "expected_fragment": "should be 1"
+    },
+    {
+      "filename": "boolean-schema.json",
+      "expected_fragment": "must be an integer"
+    }
+  ]
+}

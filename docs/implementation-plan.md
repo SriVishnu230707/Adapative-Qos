@@ -65,6 +65,8 @@ Because the current development machine is Windows and Linux practice is limited
 
 WSL can be an alternate development environment after checking its kernel, CAKE/IFB availability, namespace permissions and repeatable results. It should not silently replace the documented reference environment. Ubuntu's official documentation provides the [network administration starting point](https://ubuntu.com/server/docs/how-to/networking/).
 
+**Step-02 update, 4 November 2026:** the dedicated VirtualBox VM, installer and preflight now exist. Follow the [setup guide](setup.md) and inspect the [actual environment manifest](environments/ubuntu-24.04-virtualbox.json). The selected VM has 4 vCPUs, 3 GiB RAM and a 30 GiB virtual disk; 34 capability checks passed with one resource warning. This verifies Linux facilities and temporary namespace inspection/cleanup, not the later QoS controller or benchmark targets. The application skeleton and permanent Python environment are checklist step 03.
+
 Inside the Linux VM, install the initial tools:
 
 ```bash
@@ -143,6 +145,8 @@ adaptive-qos/
 ```
 
 Define shared data records before connecting modules: `FlowWindow`, `Classification`, `LinkEstimate`, `Intent`, `Policy`, `ApplyResult`, `MetricSample` and `Event`. Include an explicit schema version, measurement timestamp, freshness and units. An absent measurement is `null` or unavailable, never automatically zero.
+
+**Checklist step-03 update, 4 November 2026:** the installable package, record validation, clock/context checks, configuration separation, examples and distribution checks are now implemented. Use the [development guide](development.md) and [phase-3 verification record](environments/phase-03-verification.json). Controller algorithms and actual queue enforcement remain later work. The VM was recovered from a boot clock stall using one vCPU; the current test report records that profile separately from the historical phase-2 snapshot.
 
 **Completion gate:** the preflight succeeds in the documented VM, all versions are recorded, and the team can explain interfaces, routes, forwarding, namespaces and the two traffic directions. Use the learning map's Linux and measurement branches while completing this step.
 

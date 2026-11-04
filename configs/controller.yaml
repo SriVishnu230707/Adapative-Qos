@@ -1,0 +1,32 @@
+# Controller inputs: operator settings, not measured link capacity or a future ISP schedule.
+schema_version: 1
+targets:
+  namespace: qos-gw
+  upload_interface: wan0
+  download_interface: lan0
+upload:
+  minimum_bps: 500000
+  initial_bps: 18000000
+  maximum_bps: 20000000
+  nominal_rate_bps: 20000000
+  nominal_source: operator_configured
+download:
+  minimum_bps: 2000000
+  initial_bps: 90000000
+  maximum_bps: 100000000
+  nominal_rate_bps: 100000000
+  nominal_source: operator_configured
+observation_interval_ms: 1000
+telemetry_max_age_ms: 2500
+policy_lease_ms: 5000
+cooldown_ms: 2000
+decrease_fraction: 0.3
+increase_fraction: 0.05
+max_intent_duration_ms: 900000
+intent_expiry_tolerance_ms: 2000
+heartbeat:
+  interval_ms: 1000
+  stale_after_ms: 2000
+  watchdog_poll_ms: 1000
+  apply_verify_budget_ms: 2000
+  recovery_target_ms: 5000

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "record_type": "event",
+  "record_id": "record-event-1",
+  "run_id": "fixture-run-1",
+  "producer_instance_id": "fixture-producer-1",
+  "sequence": 9,
+  "boot_id": "fixture-boot-1",
+  "created_at_utc": "2026-11-04T00:00:02Z",
+  "observed_mono_ns": 2000000000,
+  "source_kind": "synthetic_fixture",
+  "severity": "info",
+  "correlation_id": "correlation-1",
+  "caused_by_record_ids": [
+    "record-policy-1",
+    "record-apply-1"
+  ],
+  "payload": {
+    "kind": "policy_verified",
+    "policy_id": "policy-1",
+    "apply_result_id": "record-apply-1",
+    "generation": 1,
+    "execution": "simulated"
+  }
+}

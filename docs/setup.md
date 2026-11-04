@@ -13,7 +13,7 @@ The project uses a dedicated Ubuntu 24.04 LTS VirtualBox VM named `adaptive-qos-
 | Host | Windows 11 Home Single Language, build 26200; x86-64 |
 | Hypervisor | Oracle VirtualBox 7.2.10r174163 |
 | Guest image | Canonical Ubuntu 24.04 LTS amd64 cloud VMDK, release build 20261017 |
-| vCPUs / RAM | 4 vCPUs / 3072 MiB RAM |
+| vCPUs / RAM | Current phase-3 profile: 1 vCPU / 3072 MiB RAM; phase 2 was verified with 4 vCPUs |
 | Disk | Dynamically allocated VDI with 30 GiB virtual capacity |
 | Firmware / adapter | EFI / virtio network adapter using VirtualBox NAT |
 | SSH | Windows loopback `127.0.0.1:2222` -> guest TCP 22; public-key login as `qos` |
@@ -21,6 +21,8 @@ The project uses a dedicated Ubuntu 24.04 LTS VirtualBox VM named `adaptive-qos-
 | Host VM, image and key files | Ignored `work/vms/` and `work/ubuntu-reference/` directories |
 
 **Verified result:** 34 required capability checks passed, with one RAM-allocation warning. Five preflight safety tests passed, and a clean VM restart finished with cloud-init status `done` and no errors. The manifest records the final post-reboot run.
+
+During phase 3, a subsequent four-vCPU boot stalled with clock-source delays before SSH became available. Retrying with one vCPU recovered startup. The [phase-3 verification record](environments/phase-03-verification.json) records the actual one-vCPU environment and a new passing standalone preflight. The phase-2 JSON is retained as its original four-vCPU historical snapshot.
 
 The plan suggested 6-8 GB RAM as an adjustable development allocation. This host had low free memory, so initial capability verification uses 3 GiB. Preflight reports the lower allocation as a warning. Before scored experiments, check memory pressure, swap and CPU saturation and increase resources or reduce the declared workload if needed. A capability pass does not establish benchmark readiness.
 
