@@ -50,3 +50,44 @@ def test_cli_exports_all_eight_schema_tags(capsys):
 def test_replay_rejects_duplicate_records(records, runtime):
     with pytest.raises(ValueError, match="duplicate record ID"):
         replay_records(records + (records[0],), runtime)
+
+
+@pytest.mark.parametrize("record_id,changes", [
+    ("record-classification-1", {"observed_mono_ns": 1_999_999_999}),
+    ("record-link-upload", {"observed_mono_ns": 1_999_999_999}),
+    ("record-link-download", {"observed_mono_ns": 1_999_999_999}),
+    ("record-event-1", {"observed_mono_ns": 1_999_999_999}),
+])
+def test_replay_rejects_effects_that_precede_their_causes(record_id, changes, records, runtime):
+    altered = tuple(record.model_copy(update=changes) if record.record_id == record_id else record
+                    for record in records)
+    with pytest.raises(ValueError, match="precedes"):
+        replay_records(altered, runtime)
+
+
+@pytest.mark.parametrize("record_id,field", [
+    ("record-link-upload", "input_record_ids"),
+    ("record-link-download", "input_record_ids"),
+    ("record-event-1", "caused_by_record_ids"),
+])
+def test_replay_resolves_every_declared_reference(record_id, field, records, runtime):
+    altered = tuple(record.model_copy(update={field: getattr(record, field) + ("missing-record",)})
+                    if record.record_id == record_id else record for record in records)
+    with pytest.raises(ValueError, match="missing"):
+        replay_records(altered, runtime)
+
+
+@pytest.mark.parametrize("cycle", [
+    {"record-link-upload": "record-link-upload"},
+    {"record-link-upload": "record-link-download", "record-link-download": "record-link-upload"},
+    {"record-policy-1": "record-apply-1"},
+])
+def test_replay_rejects_causal_cycles_even_at_equal_timestamps(cycle, records, runtime):
+    altered = tuple(record.model_copy(update={"input_record_ids": record.input_record_ids + (cycle[record.record_id],)})
+                    if record.record_id in cycle else record for record in records)
+    with pytest.raises(ValueError, match="causal cycle"):
+        replay_records(altered, runtime)
+
+
+def test_replay_is_independent_of_input_order(records, runtime):
+    assert replay_records(tuple(reversed(records)), runtime) == replay_records(records, runtime)

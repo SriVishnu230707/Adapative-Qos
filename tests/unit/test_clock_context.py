@@ -144,3 +144,31 @@ def test_verified_result_must_match_epoch_and_generation(payload, parse, records
     data["generation"] = 2
     with pytest.raises(ValueError, match="different policy generation"):
         ensure_apply_matches_policy(policy, parse(data))
+
+
+def test_policy_rejects_ambiguous_intent_snapshots(payload, parse, records, runtime):
+    inputs, flows, policy, clock = context(records)
+    data = payload("intent.json")
+    data.update(record_id="record-intent-cancelled", sequence=7, state="cancelled",
+                cancelled_at_mono_ns=2_000_000_000)
+    cancelled = parse(data)
+    inputs[cancelled.record_id] = cancelled
+    policy_data = payload("policy.json")
+    policy_data["input_record_ids"].append(cancelled.record_id)
+    with pytest.raises(ValueError, match="multiple snapshots"):
+        validate_policy_context(parse(policy_data), runtime, clock, issuer_epoch=policy.issuer_epoch,
+                                inputs=inputs, flows=flows)
+
+
+@pytest.mark.parametrize("consumer", ["intent", "policy"])
+def test_registry_key_must_match_actual_flow_identity(consumer, records, runtime):
+    inputs, flows, policy, clock = context(records)
+    original = flows["flow-1"]
+    flows["flow-1"] = original.model_copy(update={"flow_id": "other-flow"})
+    with pytest.raises(ValueError, match="observed flow/device"):
+        if consumer == "intent":
+            validate_intent_context(inputs["record-intent-1"], runtime, clock,
+                                    owner_epoch=policy.issuer_epoch, flows=flows)
+        else:
+            validate_policy_context(policy, runtime, clock, issuer_epoch=policy.issuer_epoch,
+                                    inputs=inputs, flows=flows)

@@ -26,7 +26,9 @@ def validate_intent_context(
     flows: Mapping[str, FlowIdentity],
 ) -> None:
     flow = flows.get(intent.selector.flow_id)
-    if flow is None or flow.device_id != intent.selector.device_id or flow.namespace != config.controller.targets.namespace:
+    if (flow is None or flow.flow_id != intent.selector.flow_id
+            or flow.device_id != intent.selector.device_id
+            or flow.namespace != config.controller.targets.namespace):
         raise ValueError("intent selector does not match an observed flow/device")
     if intent.duration_ms > config.controller.max_intent_duration_ms:
         raise ValueError("intent duration exceeds configured maximum")
@@ -72,6 +74,7 @@ def validate_policy_context(
         raise ValueError("policy lease exceeds configured maximum")
 
     referenced = {}
+    intents = {}
     for record_id in policy.input_record_ids:
         record = inputs.get(record_id)
         if record is None or record.record_id != record_id:
@@ -87,6 +90,10 @@ def validate_policy_context(
                 maximum = min(maximum, record.valid_for_ms)
             if not is_fresh(record, clock, maximum):
                 raise ValueError("policy input telemetry is stale")
+        if isinstance(record, Intent):
+            if record.intent_id in intents:
+                raise ValueError("policy references multiple snapshots of the same intent")
+            intents[record.intent_id] = record
         referenced[record_id] = record
     if policy.mode == "adaptive" and {
         item.direction for item in referenced.values() if isinstance(item, LinkEstimate)
@@ -96,7 +103,9 @@ def validate_policy_context(
     for treatment in policy.treatments:
         flow = flows.get(treatment.flow_id)
         prediction = referenced.get(treatment.prediction_record_id)
-        if flow is None or flow.device_id != treatment.device_id or flow.namespace != config.controller.targets.namespace:
+        if (flow is None or flow.flow_id != treatment.flow_id
+                or flow.device_id != treatment.device_id
+                or flow.namespace != config.controller.targets.namespace):
             raise ValueError("policy treatment does not match an observed flow/device")
         if not isinstance(prediction, Classification) or prediction.flow_id != treatment.flow_id:
             raise ValueError("treatment prediction does not belong to the selected flow")
@@ -105,8 +114,7 @@ def validate_policy_context(
         if treatment.correction is not None and treatment.correction.expires_mono_ns <= clock.now_ns():
             raise ValueError("treatment correction has expired")
         if treatment.intent_id is not None:
-            intent = next((item for item in referenced.values() if isinstance(item, Intent)
-                           and item.intent_id == treatment.intent_id), None)
+            intent = intents.get(treatment.intent_id)
             if intent is None:
                 raise ValueError("treatment intent is missing from policy inputs")
             validate_intent_context(intent, config, clock, owner_epoch=issuer_epoch, flows=flows)

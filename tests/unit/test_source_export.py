@@ -31,6 +31,13 @@ def test_source_verifier_rejects_paths_outside_allowlist(tmp_path, name):
         exporter.verify_source(tmp_path, {"schema_version": 1, "files": {name: "unused"}})
 
 
+@pytest.mark.parametrize("name", ["src/..\\work/key", "src/./package.py",
+                                 "src//package.py", "src/package.py:stream"])
+def test_source_paths_require_canonical_portable_spelling(tmp_path, name):
+    with pytest.raises(ValueError, match="canonical"):
+        exporter.source_path(tmp_path, name)
+
+
 def test_source_export_refuses_public_output_path(tmp_path):
     with pytest.raises(ValueError, match="ignored project work"):
         exporter.export_source(tmp_path, tmp_path / "dist")

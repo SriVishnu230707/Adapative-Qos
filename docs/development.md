@@ -48,6 +48,14 @@ The installed `adaptive-qos` console entry point accepts the same arguments. Con
 
 Command success exits 0. Validation errors or invalid command arguments exit 2, with an error on stderr. For the existing standalone Linux preflight, use `sudo bash lab/preflight.sh`; it continues using the system Python independently of this package.
 
+If a restricted Windows session cannot create pytest's default temporary directories, use an explicit directory under ignored `work`:
+
+```powershell
+.venv/Scripts/python.exe -m pytest --basetemp=work/pytest-tmp
+```
+
+Pytest clears the named temporary directory; reserve it for test scratch files.
+
 ## Contract conventions
 
 - `schema_version`, record type, IDs, producer instance, sequence, boot/clock identity and aware UTC creation time are explicit.
@@ -57,6 +65,8 @@ Command success exits 0. Validation errors or invalid command arguments exit 2, 
 - Prediction, user correction and chosen service treatment remain distinct. Registry-dependent checks receive a typed observed-flow mapping explicitly.
 - Apply results track upload, download and marking independently, including errors, partial outcomes and read-back. Verified kernel state does not itself establish user-experience improvement.
 - Managed policies have finite leases. Safe policies contain no temporary treatments and remain until replaced. Pure context checks enforce configured bounds, known targets, input freshness and issuer/generation ordering for new proposals.
+- Flow-registry keys must match the stored flow identity. A managed policy cannot cite multiple snapshots of the same intent; the caller must reconcile them before submitting a proposal.
+- Synthetic replay resolves every declared cause, rejects causal cycles and checks that classifications, estimates, decisions and events do not precede their inputs. Equal monotonic timestamps are allowed, and input file order does not determine causality.
 
 ## Build and verify distribution
 

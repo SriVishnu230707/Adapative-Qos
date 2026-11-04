@@ -50,6 +50,34 @@ def replay_records(records: tuple[RecordType, ...], config: RuntimeConfig) -> di
         raise ValueError("classification does not reference the observed flow window")
     if metric.scope != "flow" or metric.target_id != flow.flow.flow_id:
         raise ValueError("metric does not reference the observed flow")
+    inputs = {record.record_id: record for record in records}
+    dependencies = {record.record_id: () for record in records}
+    dependencies[prediction.record_id] = (flow.record_id,)
+    dependencies[applied.record_id] = (policy.record_id,)
+    for record in records:
+        if isinstance(record, (LinkEstimate, Policy)):
+            dependencies[record.record_id] = record.input_record_ids
+        elif isinstance(record, Event):
+            dependencies[record.record_id] = record.caused_by_record_ids
+    visiting, visited = set(), set()
+
+    def validate_causes(record_id):
+        if record_id in visiting:
+            raise ValueError("fixture chain contains a causal cycle")
+        if record_id in visited:
+            return
+        visiting.add(record_id)
+        for cause_id in dependencies[record_id]:
+            if cause_id not in inputs:
+                raise ValueError(f"{record_id}: missing cause record {cause_id}")
+            if inputs[cause_id].observed_mono_ns > inputs[record_id].observed_mono_ns:
+                raise ValueError(f"{record_id}: observation precedes its cause {cause_id}")
+            validate_causes(cause_id)
+        visiting.remove(record_id)
+        visited.add(record_id)
+
+    for record in records:
+        validate_causes(record.record_id)
     for estimate in estimates:
         if estimate.observed_rate_bps != flow.rate_bps(estimate.direction):
             raise ValueError("link observed rate does not match flow accounting")
@@ -57,7 +85,6 @@ def replay_records(records: tuple[RecordType, ...], config: RuntimeConfig) -> di
             raise ValueError("link estimate lacks observation references")
     clock = FakeClock(flow.boot_id, max(record.observed_mono_ns for record in records))
     flows = {flow.flow.flow_id: flow.flow}
-    inputs = {record.record_id: record for record in records}
     validate_intent_context(intent, config, clock, owner_epoch=policy.issuer_epoch, flows=flows)
     validate_policy_context(policy, config, clock, issuer_epoch=policy.issuer_epoch, inputs=inputs, flows=flows)
     ensure_apply_matches_policy(policy, applied)

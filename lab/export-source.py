@@ -17,6 +17,9 @@ EXCLUDED = {".git", ".venv", "work", "dist", "build", "__pycache__", ".pytest_ca
 
 
 def source_path(root: Path, relative: str) -> Path:
+    if (not isinstance(relative, str) or "\\" in relative or ":" in relative
+            or PurePosixPath(relative).as_posix() != relative):
+        raise ValueError("source path must use canonical relative POSIX spelling")
     parts = PurePosixPath(relative).parts
     if not parts or parts[0] not in ALLOWED or ".." in parts:
         raise ValueError(f"path is outside the source allowlist: {relative}")
