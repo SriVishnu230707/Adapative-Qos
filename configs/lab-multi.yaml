@@ -1,0 +1,55 @@
+# Four distinct synthetic device identities on a shared layer-2 LAN.
+schema_version: 1
+namespaces: [qos-client, qos-game, qos-tv, qos-bulk, qos-lan, qos-gw, qos-isp, qos-server]
+gateway: {namespace: qos-gw, upload_interface: wan0, download_interface: lan0}
+links:
+  - name: client-lan
+    a: {namespace: qos-client, interface: c0, ipv4_cidr: 10.10.0.2/24, ipv6_cidr: 'fd42:ad:10::2/64'}
+    b: {namespace: qos-lan, interface: p-client, ipv4_cidr: null, ipv6_cidr: null}
+  - name: game-lan
+    a: {namespace: qos-game, interface: c0, ipv4_cidr: 10.10.0.3/24, ipv6_cidr: 'fd42:ad:10::3/64'}
+    b: {namespace: qos-lan, interface: p-game, ipv4_cidr: null, ipv6_cidr: null}
+  - name: tv-lan
+    a: {namespace: qos-tv, interface: c0, ipv4_cidr: 10.10.0.4/24, ipv6_cidr: 'fd42:ad:10::4/64'}
+    b: {namespace: qos-lan, interface: p-tv, ipv4_cidr: null, ipv6_cidr: null}
+  - name: bulk-lan
+    a: {namespace: qos-bulk, interface: c0, ipv4_cidr: 10.10.0.5/24, ipv6_cidr: 'fd42:ad:10::5/64'}
+    b: {namespace: qos-lan, interface: p-bulk, ipv4_cidr: null, ipv6_cidr: null}
+  - name: lan-gateway
+    a: {namespace: qos-lan, interface: p-gw, ipv4_cidr: null, ipv6_cidr: null}
+    b: {namespace: qos-gw, interface: lan0, ipv4_cidr: 10.10.0.1/24, ipv6_cidr: 'fd42:ad:10::1/64'}
+  - name: gateway-isp
+    a: {namespace: qos-gw, interface: wan0, ipv4_cidr: 10.20.0.1/30, ipv6_cidr: 'fd42:ad:20::1/64'}
+    b: {namespace: qos-isp, interface: gw0, ipv4_cidr: 10.20.0.2/30, ipv6_cidr: 'fd42:ad:20::2/64'}
+  - name: isp-server
+    a: {namespace: qos-isp, interface: srv0, ipv4_cidr: 10.30.0.1/24, ipv6_cidr: 'fd42:ad:30::1/64'}
+    b: {namespace: qos-server, interface: s0, ipv4_cidr: 10.30.0.2/24, ipv6_cidr: 'fd42:ad:30::2/64'}
+bridges:
+  - {namespace: qos-lan, interface: br0, ports: [p-client, p-game, p-tv, p-bulk, p-gw]}
+routers: [qos-gw, qos-isp]
+routes:
+  - {namespace: qos-client, address_family: 4, destination: default, via: 10.10.0.1, interface: c0}
+  - {namespace: qos-client, address_family: 6, destination: default, via: 'fd42:ad:10::1', interface: c0}
+  - {namespace: qos-game, address_family: 4, destination: default, via: 10.10.0.1, interface: c0}
+  - {namespace: qos-game, address_family: 6, destination: default, via: 'fd42:ad:10::1', interface: c0}
+  - {namespace: qos-tv, address_family: 4, destination: default, via: 10.10.0.1, interface: c0}
+  - {namespace: qos-tv, address_family: 6, destination: default, via: 'fd42:ad:10::1', interface: c0}
+  - {namespace: qos-bulk, address_family: 4, destination: default, via: 10.10.0.1, interface: c0}
+  - {namespace: qos-bulk, address_family: 6, destination: default, via: 'fd42:ad:10::1', interface: c0}
+  - {namespace: qos-gw, address_family: 4, destination: default, via: 10.20.0.2, interface: wan0}
+  - {namespace: qos-gw, address_family: 6, destination: default, via: 'fd42:ad:20::2', interface: wan0}
+  - {namespace: qos-isp, address_family: 4, destination: 10.10.0.0/24, via: 10.20.0.1, interface: gw0}
+  - {namespace: qos-isp, address_family: 6, destination: 'fd42:ad:10::/64', via: 'fd42:ad:20::1', interface: gw0}
+  - {namespace: qos-server, address_family: 4, destination: default, via: 10.30.0.1, interface: s0}
+  - {namespace: qos-server, address_family: 6, destination: default, via: 'fd42:ad:30::1', interface: s0}
+verification: {clients: [qos-client, qos-game, qos-tv, qos-bulk], server: qos-server}
+emulator:
+  namespace: qos-isp
+  download_interface: gw0
+  upload_interface: srv0
+  initial_download_rate_bps: 100000000
+  initial_upload_rate_bps: 20000000
+  minimum_supported_download_rate_bps: 20000000
+  minimum_supported_upload_rate_bps: 5000000
+  queue_limit_packets: 1000
+synthetic_traffic: true

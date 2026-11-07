@@ -4,7 +4,7 @@
 
 Implement these steps in order. Each step produces something you can inspect or run. Advance after its completion check passes.
 
-This is a task breakdown for the proposed implementation. Steps 01-03 are complete: requirements, the Linux environment and the shared contract package are implemented and verified. Most networking/algorithm modules named below still need to be created, and QoS runtime acceptance checks remain unrun. Linux CAKE, Python, nftables and conntrack are project choices; they are not additional requirements imposed by the problem statement.
+Steps 01–05 are complete. The verified foundation includes the Linux environment, shared contracts, routed IPv4/IPv6 lab and independent ISP emulator. The later tasks cover the remaining algorithms, enforcement and full QoS runtime acceptance. Linux CAKE, Python, nftables and conntrack are project choices.
 
 <a name="step-01"></a>
 
@@ -62,13 +62,15 @@ This is a task breakdown for the proposed implementation. Steps 01-03 are comple
 
 **04. Build the routed network lab**
 
-- [ ] Create client, gateway, ISP and server namespaces connected by veth pairs.
-- [ ] Configure addresses, forward routes, return routes and forwarding inside the routers.
-- [ ] Verify IPv4, then equivalent IPv6 connectivity in the isolated lab.
-- [ ] Implement inspection and cleanup for resources owned by this project.
-- [ ] Expand to a LAN bridge and separate device namespaces after the single-client path works.
+- [x] Create client, gateway, ISP and server namespaces connected by veth pairs.
+- [x] Configure addresses, forward routes, return routes and forwarding inside the routers.
+- [x] Verify IPv4, then equivalent IPv6 connectivity in the isolated lab.
+- [x] Implement inspection and cleanup for resources owned by this project.
+- [x] Expand to a LAN bridge and separate device namespaces after the single-client path works.
 
-**Output:** `lab/up.sh`, `lab/down.sh`, `lab/inspect.sh` and a topology diagram.
+**Output:** [Setup](../lab/up.sh), [cleanup](../lab/down.sh), [inspection](../lab/inspect.sh), [delivery verification](../lab/verify.sh), [topology and operating guide](routed-lab.md), and [verification evidence](environments/phase-04-verification.json).
+
+**Status:** complete on 5 November 2026. The four-node and four-device bridge configurations each passed two setup/delivery/reset cycles. Seven privileged integration cases passed, including collision, rollback and replacement-namespace protection. The ordinary Linux suite passed 159 tests; Windows passed 158 with seven privileged-test skips and one symlink-permission skip. This establishes routed connectivity and lifecycle behavior; ISP rate changes and QoS acceptance experiments remain later steps.
 
 **Complete when:** clients can upload/download through both routers, and reset recreates the same working topology.
 
@@ -78,15 +80,15 @@ This is a task breakdown for the proposed implementation. Steps 01-03 are comple
 
 **05. Add independent ISP bandwidth emulation**
 
-- [ ] Place upload and download bottlenecks in the ISP namespace, separate from gateway QoS.
-- [ ] Configure an initial profile, such as 100 Mbit/s download and 20 Mbit/s upload.
-- [ ] Add timed capacity drop/recovery profiles and documented queue limits.
-- [ ] Keep the actual capacity schedule available only to the runner and offline evaluator.
-- [ ] Validate any added delay/loss stage without replacing other queues accidentally.
+- [x] Place upload and download bottlenecks in the ISP namespace, separate from gateway QoS.
+- [x] Configure an initial profile of 100 Mbit/s download and 20 Mbit/s upload.
+- [x] Add timed capacity drop and recovery profiles and document the queue limits.
+- [x] Keep the live schedule in the root-only runner journal and support post-run export for the offline evaluator.
+- Optional added delay and loss are deferred until a separately validated impairment stage is needed.
 
-**Output:** `lab/isp_profile.sh` and scenario configurations.
+Use the ISP CLI and packaged scenarios to run or inspect the emulator. [CLI](../lab/isp_profile.sh) · [Scenarios](../experiments/scenarios) · [Operating guide](isp-emulation.md)
 
-**Complete when:** throughput follows emulator changes while the controller has no access to future change times or hidden capacity values.
+Verification covered all eight static direction and address-family combinations, timed drops and recovery, shared contention, rollback and lab teardown. An unprivileged identity was denied access to the resolved schedule. Verify the controller service's input boundary under its actual identity when it is implemented. [Phase 5 verification](environments/phase-05-verification.json)
 
 [Detailed guidance](implementation-plan.md#step-3)
 

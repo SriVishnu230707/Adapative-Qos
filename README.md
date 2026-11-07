@@ -9,6 +9,11 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 - **[Verified environment manifest](docs/environments/ubuntu-24.04-virtualbox.json):** actual Ubuntu/kernel/tool versions and step-02 preflight evidence.
 - **[Phase 3 design analysis](docs/phase-03-analysis.md):** proposed package structure, shared records, validation rules and completion checks.
 - **[Development and contract checks](docs/development.md):** install the package, synchronize source to Ubuntu, validate configuration and replay examples.
+- **[Routed lab](docs/routed-lab.md):** create, inspect, verify and clean up single-client or four-device IPv4/IPv6 topologies.
+- **[Step 4 verification](docs/environments/phase-04-verification.json):** real transfer, reset, ownership and host-network preservation evidence.
+- **[Phase 5 design analysis](docs/phase-05-analysis.md):** independent ISP bottlenecks, scenario timing, lifecycle changes and the required verification plan.
+- **[ISP emulation guide](docs/isp-emulation.md)** covers bandwidth profiles, scenario commands and evidence export.
+- **[Phase 5 verification](docs/environments/phase-05-verification.json)** records measured static and timed rates, recovery checks and the reference VM configuration.
 - **[Phase 3 verification](docs/environments/phase-03-verification.json):** Linux/Windows test results, source hashes and fresh-wheel installation evidence.
 - **[Implementation checklist](docs/implementation-checklist.md):** 16 ordered build steps with tasks, expected outputs and completion checks.
 - **[Detailed implementation plan](docs/implementation-plan.md):** architecture, module design, algorithms, experiments and acceptance evidence.
@@ -24,9 +29,9 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 
 ## Current status
 
-Steps 01-03 are complete: requirements, a verified Ubuntu environment, and an installable Python package with eight validated records, separate runtime/lab configuration, deterministic example replay and tests. Phase 3 passed 119 tests on Ubuntu and 118 tests on Windows, with one Windows symlink-permission skip. A built wheel also passed checks in a fresh environment outside the repository. The VM currently uses one vCPU and 3 GiB RAM after an early-boot clock stall at four vCPUs; the historical phase-2 manifest retains its original four-vCPU measurements.
+Steps 01–05 are complete. The routed IPv4/IPv6 lab supports single-client and four-device configurations, with independently controlled ISP upload and download limits. Phase 5 verified 201 Linux test cases across the full suite and a targeted static-capacity rerun. Windows passed 185 tests with 16 skips. The reference Ubuntu VM uses one vCPU and 3 GiB RAM.
 
-The traffic observer, classifier/estimator algorithms, real actuator and dashboard are the next implementation work. The example apply results are simulated; QoS benchmark results have not been produced.
+Workloads and the uncontrolled baseline are step 06. The observer, classifier, estimator, QoS actuator, dashboard and full QoS acceptance experiments follow.
 
 ## Run the phase-3 checks
 

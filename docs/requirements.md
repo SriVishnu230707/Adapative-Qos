@@ -2,7 +2,7 @@
 
 [Project README](../README.md) · [Implementation checklist](implementation-checklist.md#step-01) · [Detailed implementation plan](implementation-plan.md#step-1)
 
-Prepared on 4 November 2026. This document completes implementation step 01: deciding what to build and what evidence will establish completion. The QoS software, lab and experiment results do not exist yet. Every implementation acceptance check below is **Not run**.
+Prepared on 4 November 2026. This document completes implementation step 01: deciding what to build and what evidence will establish completion. It originally specified the system before implementation; current build status is recorded in section 7. Every full QoS acceptance check below remains **Not run**.
 
 ## 1. Sources and interpretation
 
@@ -243,7 +243,7 @@ results/<scenario>/<mode>/<run-id>/
 
 An acceptance entry must identify requirement IDs, test ID, configuration/target version, run IDs, status, actual measurements, reason and evidence paths. Valid runtime statuses are **Not run**, **Pass**, **Fail**, **Blocked** (with failed prerequisite), and **Not applicable** (only with a justified condition such as no AI). Missing required evidence cannot be replaced with a screenshot or a claim. Documentation and repository-review checks may use a dedicated review run ID.
 
-**Current implementation status:** R01-R21 are specified; full QoS acceptance procedures T01-T16 are **Not run**. The Linux environment and phase-3 shared package/configuration contracts are implemented and have separate verification records. IPv6 capability was verified in preflight; complete gateway IPv6 enforcement remains part of later integration checks. The observer/classifier/estimator algorithms, actuator, watchdog, intent service, dashboard and benchmark evidence still need implementation. R21 is conditional and can be marked not applicable in the eventual deterministic release.
+R01–R21 are specified. Full QoS acceptance procedures T01–T16 remain **unrun**. The Linux environment, shared package and configuration contracts, routed IPv4/IPv6 lab, and independent ISP rate emulator are implemented. Separate lab checks cover four-device bridging, repeatable cleanup, and measured delivery during scheduled ISP capacity changes. The observer, classifier, estimator, QoS actuator, watchdog, intent service, dashboard, and acceptance experiments remain later work. R21 is conditional for the eventual release. [ISP emulation guide](isp-emulation.md)
 
 **Step-01 documentation gate:**
 

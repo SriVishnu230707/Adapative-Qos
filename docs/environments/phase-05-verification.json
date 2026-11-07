@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "scope": "phase-05 isolated ISP shaping and scheduled delivery verification",
+  "environment": {
+    "system": "Linux",
+    "os": "Ubuntu 24.04.5 LTS",
+    "kernel": "6.8.0-147-generic",
+    "python": "3.12.3",
+    "vcpus": 1,
+    "privileged_test_uid": 0,
+    "memory": {
+      "MemTotal": "3025144 kB",
+      "SwapTotal": "0 kB"
+    },
+    "tools": {
+      "ip": "ip utility, iproute2-6.1.0, libbpf 1.3.0",
+      "tc": "tc utility, iproute2-6.1.0, libbpf 1.3.0",
+      "iperf3": "iperf 3.16 (cJSON 1.7.15)"
+    }
+  },
+  "source_base_revision": "4abac564a4b1c786612ab8678e7831d919bdb7dc",
+  "source_code_sha256": {
+    "MANIFEST.in": "bbca4cda6a0b95382909a571ad114dd08fbbca67c81accf93e646d9f2bb7f6ab",
+    "configs/controller.yaml": "76b11083d18127ff997d85a063b1787665c2d90a4840992f725b4623ff3454d7",
+    "configs/lab-multi.yaml": "ecfcfc01f2f719e2f60773d8e7ece8ba0940079e898abb52516b2b61b1979f08",
+    "configs/lab.yaml": "9c0f9a355eda6a1f22e45d1d98c88d583a56f79b213a283f558a8c288790650b",
+    "configs/safe-policy.yaml": "a06004882a92d3d68b81206d76197b002c57179aa41e049657d039a2b80e3f0a",
+    "experiments/scenarios/download-drop.yaml": "498317670ec640a65f55a0103b656383f82d51b34df32b783328f7ffd89dbfc3",
+    "experiments/scenarios/upload-drop.yaml": "2cc08265e0225ee5bdcefae91be9a1ee62cd56a312830a183a8ef5aa0c468179",
+    "lab/create-seed.py": "14807947a704a79256d2b0933fb7035a140b2a5a90c1071f32b6aa9f99225681",
+    "lab/down.sh": "62f73058219a4cc93aa2a976b9dbfe6620ec8b4e26e6e31e788853395ef94f5a",
+    "lab/export-source.py": "254954bdd61692e4d38b116b57001d15688972cf47d9850b84c01d666cd546a2",
+    "lab/inspect.sh": "db30e56d47d2bb9d2f6ad89f0e5ace5409fee03c37e89a479bbe78c1d6c73673",
+    "lab/install-tools.sh": "89a6f2eaeab5a896b8f377b4a5593b177ce5baf4f4d20effd6095f79653f3d55",
+    "lab/isp_profile.sh": "61605e0731b1db2faad6b715227f4ff156ae949f788d917de3a94396dc5d16c1",
+    "lab/preflight.py": "882fde6d7260e29dc2509cd531ce4124793d2116663437a3c6eb8854929391d7",
+    "lab/preflight.sh": "4592a36cfb1f20ca12993f244c98fc1b75a3a03a52dc2267adfd10391989b913",
+    "lab/run-lab.sh": "0b307fb669003a5891e85f07ad28e884763c75efa18d8082801c1242c59f5caf",
+    "lab/up.sh": "ec7487d216bc41e07287b3e481668c76ae0ca658344a04cff72ce3771082c693",
+    "lab/verify.sh": "d50e8071ad15373562c22876b78c3b8faa29c46a48ad82eec100966f702a7b55",
+    "pyproject.toml": "94267965a62d31fe941c22af43e151596a6a01fbec39ba00f4b2b5ec7b0fb33a",
+    "requirements/dev.txt": "07c1f9bc2d7059ec2b26b707ffc9ffd4992c4a83688b89b1a01b4244f3671b1a",
+    "requirements/runtime.txt": "07c5fc67036bf1293c7ab07aa3ad0d8652dde5ef3ec4eae26bfe5a36a37f4038",
+    "src/adaptive_qos/__init__.py": "18d911827ef32c3e5d6e211061532c8a450ebe569eda613f8f7542c78fad2f30",
+    "src/adaptive_qos/__main__.py": "f3e47c3bc304566ef1c540a2cd68ab8f19e436320d3ecc5ce92353f2b63b7371",
+    "src/adaptive_qos/cli.py": "94376bd0ad84e7e8f6669cd00c611c6039e9ef65918a434e9e01f82d86595663",
+    "src/adaptive_qos/clock.py": "8c9345728838446c96a9581a2b50c060dfef4f7ed95a3417d4a591742ff3dd03",
+    "src/adaptive_qos/config.py": "a202ae3c73fe78970bc71be630e2a6a151c2d6130fb4c5776799052eaf3f4f10",
+    "src/adaptive_qos/contracts.py": "0ad81811425dec00c547340f5122238a4b28c903f40c1f6ed422f9fb83381829",
+    "src/adaptive_qos/isp.py": "f80e9ad0a80764239d0cbeea32d1fdb0ff7a87218cccf15796583f46d3e24b9d",
+    "src/adaptive_qos/lab.py": "cff1a68f96b58c2b90805dc95821b1552f40236f8b7ec13184fa47e9503b49fe",
+    "src/adaptive_qos/models.py": "9c519ea4789c4ea6d79e505e5916bbf5ea2ae40a309466191cd00fd62c6ecd15",
+    "src/adaptive_qos/tc_readback.py": "d4b7193fe6e675c8b474dd848373e45a9a789fbc5f442d683dffea16c88e95ae",
+    "src/adaptive_qos/validation.py": "887449964567afbbec7e3884b22d88251f2c30566a9f69bfb13868b8e675472d",
+    "tests/conftest.py": "d64248dc7900dff407f4607ef1a04acb255eda13d9249602bb4232ebeb4eb97f",
+    "tests/integration/test_isp_profiles.py": "a9c47cdb67f35a6b5bb4519b85d2de898fbe65d9dd6b6edc63540444003e7c1f",
+    "tests/integration/test_routed_lab.py": "315a89dc78a5cea3bc75ff5f530552c75ba2089eb75876e607ae4e62735841b7",
+    "tests/integration/udp_load.py": "6e8daa3d799a28a39852cf59a9ca9f3d8e32f2790a9877fd81792ea611242ee9",
+    "tests/test_preflight.py": "e605137885916717a51e2e448b6145cfab0348011fca1cec37217e121a39c6fe",
+    "tests/unit/test_cli_contracts.py": "292daf6cc89570c8f28d3ab336caf7b99d8a1ceb1016f3965aef11c36c4fa907",
+    "tests/unit/test_clock_context.py": "0a7a2b281c4353ebeeb0d296dd69c00751b830ea7459999d43f0bfa35a093200",
+    "tests/unit/test_config.py": "da31b2a2cba76bff77bd57535827bd936e601df41eef11bed454213b0badb931",
+    "tests/unit/test_isp.py": "918480e32e2994654b75f1877a9c6c8ba5c919b3d6d51c9aa334bab8de9301ee",
+    "tests/unit/test_lab.py": "5e0d8918402ee91372b9b37975a3d4e6b2cca782a71212e456a1d912f84a26bd",
+    "tests/unit/test_models.py": "4df18fc02b97f801193c0620f2c1c81307f4b11ebc65bcfab7562ab164a8c145",
+    "tests/unit/test_source_export.py": "a5ec56b0a1dc0d4839c7144194b24a3fc2ebf28775d6c49ab94696449ab58399",
+    "tests/unit/test_tc_readback.py": "a1b7b10ad9e72e82b59c4cd81c9efa3b4b911de331bbf6f36ba61655546694de"
+  },
+  "linux_pytest": {
+    "distinct_passed_cases": 201,
+    "full_run": {
+      "tests": 201,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 200
+    },
+    "static_capacity_rerun": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1
+    }
+  },
+  "windows": {
+    "python": "3.12.14",
+    "pytest": {
+      "tests": 201,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 16,
+      "passed": 185
+    }
+  },
+  "measurement": {
+    "transport": "paced UDP",
+    "packet_payload_bytes": 1400,
+    "segments_per_batch": 8,
+    "duration_seconds": 6,
+    "excluded_warmup_seconds": 2,
+    "excluded_final_seconds": 1,
+    "minimum_offer_ratio": 1.05,
+    "receiver_tolerance_ratio": [
+      0.75,
+      1.15
+    ]
+  },
+  "unshaped_headroom": [
+    {
+      "client": "qos-client",
+      "family": 4,
+      "direction": "download",
+      "requested_offer_bps": 150000000,
+      "steady_sender_bps": 142254933.33333334,
+      "steady_receiver_bps": 142254933.33333334,
+      "required_bps": 120000000
+    },
+    {
+      "client": "qos-client",
+      "family": 4,
+      "direction": "upload",
+      "requested_offer_bps": 30000000,
+      "steady_sender_bps": 29986133.333333332,
+      "steady_receiver_bps": 29986133.333333332,
+      "required_bps": 24000000
+    }
+  ],
+  "static_profiles": [
+    {
+      "client": "qos-client",
+      "family": 4,
+      "direction": "download",
+      "requested_offer_bps": 150000000,
+      "steady_sender_bps": 143240533.33333334,
+      "steady_receiver_bps": 95812266.66666667,
+      "expected_bps": 100000000,
+      "fifo_sent_bytes_delta": 76149178
+    },
+    {
+      "client": "qos-client",
+      "family": 4,
+      "direction": "upload",
+      "requested_offer_bps": 30000000,
+      "steady_sender_bps": 29986133.333333332,
+      "steady_receiver_bps": 19413333.333333332,
+      "expected_bps": 20000000,
+      "fifo_sent_bytes_delta": 15228152
+    },
+    {
+      "client": "qos-client",
+      "family": 6,
+      "direction": "download",
+      "requested_offer_bps": 150000000,
+      "steady_sender_bps": 144405333.33333334,
+      "steady_receiver_bps": 94826666.66666667,
+      "expected_bps": 100000000,
+      "fifo_sent_bytes_delta": 61546208
+    },
+    {
+      "client": "qos-client",
+      "family": 6,
+      "direction": "upload",
+      "requested_offer_bps": 30000000,
+      "steady_sender_bps": 29986133.333333332,
+      "steady_receiver_bps": 19174400.0,
+      "expected_bps": 20000000,
+      "fifo_sent_bytes_delta": 15417844
+    },
+    {
+      "client": "qos-client",
+      "family": 4,
+      "direction": "download",
+      "requested_offer_bps": 30000000,
+      "steady_sender_bps": 29986133.333333332,
+      "steady_receiver_bps": 19353600.0,
+      "expected_bps": 20000000,
+      "fifo_sent_bytes_delta": 15446290
+    },
+    {
+      "client": "qos-client",
+      "family": 4,
+      "direction": "upload",
+      "requested_offer_bps": 7500000,
+      "steady_sender_bps": 7496533.333333333,
+      "steady_receiver_bps": 4868266.666666667,
+      "expected_bps": 5000000,
+      "fifo_sent_bytes_delta": 3901022
+    },
+    {
+      "client": "qos-client",
+      "family": 6,
+      "direction": "download",
+      "requested_offer_bps": 30000000,
+      "steady_sender_bps": 29926400.0,
+      "steady_receiver_bps": 19144533.333333332,
+      "expected_bps": 20000000,
+      "fifo_sent_bytes_delta": 15428836
+    },
+    {
+      "client": "qos-client",
+      "family": 6,
+      "direction": "upload",
+      "requested_offer_bps": 7500000,
+      "steady_sender_bps": 7496533.333333333,
+      "steady_receiver_bps": 4778666.666666667,
+      "expected_bps": 5000000,
+      "fifo_sent_bytes_delta": 3984404
+    }
+  ],
+  "timed_profiles": {
+    "download": {
+      "stages": [
+        {
+          "client": "qos-client",
+          "family": 4,
+          "direction": "download",
+          "requested_offer_bps": 120000000,
+          "steady_sender_bps": 115584000.0,
+          "steady_receiver_bps": 96558933.33333333,
+          "expected_bps": 100000000,
+          "requested_offset_ms": 0,
+          "verified_mono_ns": 306823916863,
+          "lateness_ns": 1787634779
+        },
+        {
+          "client": "qos-client",
+          "family": 4,
+          "direction": "download",
+          "requested_offer_bps": 24000000,
+          "steady_sender_bps": 24012800.0,
+          "steady_receiver_bps": 19413333.333333332,
+          "expected_bps": 20000000,
+          "requested_offset_ms": 12000,
+          "verified_mono_ns": 318931610322,
+          "lateness_ns": 1297114117
+        },
+        {
+          "client": "qos-client",
+          "family": 4,
+          "direction": "download",
+          "requested_offer_bps": 120000000,
+          "steady_sender_bps": 110506666.66666667,
+          "steady_receiver_bps": 92974933.33333333,
+          "expected_bps": 100000000,
+          "requested_offset_ms": 24000,
+          "verified_mono_ns": 331798468186,
+          "lateness_ns": 1820425875
+        }
+      ],
+      "baseline_restored": true
+    },
+    "upload": {
+      "stages": [
+        {
+          "client": "qos-client",
+          "family": 4,
+          "direction": "upload",
+          "requested_offer_bps": 24000000,
+          "steady_sender_bps": 24012800.0,
+          "steady_receiver_bps": 19413333.333333332,
+          "expected_bps": 20000000,
+          "requested_offset_ms": 0,
+          "verified_mono_ns": 357417689157,
+          "lateness_ns": 1482293395
+        },
+        {
+          "client": "qos-client",
+          "family": 4,
+          "direction": "upload",
+          "requested_offer_bps": 6000000,
+          "steady_sender_bps": 6003200.0,
+          "steady_receiver_bps": 4838400.0,
+          "expected_bps": 5000000,
+          "requested_offset_ms": 12000,
+          "verified_mono_ns": 369900736962,
+          "lateness_ns": 1186738682
+        },
+        {
+          "client": "qos-client",
+          "family": 4,
+          "direction": "upload",
+          "requested_offer_bps": 24000000,
+          "steady_sender_bps": 23982933.333333332,
+          "steady_receiver_bps": 19413333.333333332,
+          "expected_bps": 20000000,
+          "requested_offset_ms": 24000,
+          "verified_mono_ns": 381828800956,
+          "lateness_ns": 1243358546
+        }
+      ],
+      "baseline_restored": true
+    }
+  },
+  "shared_bottleneck": {
+    "configured_bps": 20000000,
+    "aggregate_receiver_bps": 17501866.666666668,
+    "clients": [
+      {
+        "client": "qos-client",
+        "family": 4,
+        "direction": "download",
+        "requested_offer_bps": 7000000,
+        "steady_sender_bps": 6152533.333333333,
+        "steady_receiver_bps": 4480000.0
+      },
+      {
+        "client": "qos-game",
+        "family": 6,
+        "direction": "download",
+        "requested_offer_bps": 7000000,
+        "steady_sender_bps": 6510933.333333333,
+        "steady_receiver_bps": 4808533.333333333
+      },
+      {
+        "client": "qos-tv",
+        "family": 4,
+        "direction": "download",
+        "requested_offer_bps": 7000000,
+        "steady_sender_bps": 5794133.333333333,
+        "steady_receiver_bps": 4002133.3333333335
+      },
+      {
+        "client": "qos-bulk",
+        "family": 6,
+        "direction": "download",
+        "requested_offer_bps": 7000000,
+        "steady_sender_bps": 5973333.333333333,
+        "steady_receiver_bps": 4211200.0
+      }
+    ]
+  },
+  "low_demand": {
+    "client": "qos-client",
+    "family": 6,
+    "direction": "upload",
+    "requested_offer_bps": 1000000,
+    "steady_sender_bps": 985600.0,
+    "steady_receiver_bps": 985600.0
+  },
+  "lifecycle_checks_passed": [
+    "foreign queue refused",
+    "second-direction update rolled back",
+    "cooperative cancellation",
+    "dead worker recovery",
+    "topology cleanup with active scenario"
+  ],
+  "preservation": {
+    "initial_namespace_network_configuration_unchanged": true,
+    "private_schedule_read_denied_for_nobody": true
+  },
+  "active_lab": {
+    "lab_run_id": "f048917482e641a8b00a1098cccbaae1",
+    "readback": {
+      "download_bps": 100000000,
+      "upload_bps": 20000000
+    },
+    "scenario_worker_active": false
+  },
+  "raw_report_sha256": {
+    "cancel-and-crash.json": "562a93645daf0e8ef92f8f25c3e6b1d4ce701815953f45e38d9ae56640729912",
+    "cleanup-worker.json": "8f958cb6bd229e264d1b6e771f4606f5099f4ae371e9ad35b8e1ce0b6f82029c",
+    "host-preservation-full-suite.json": "d69cf2e545f1348928bde8ba54c0f66aa8fe8254e2ba42f242fd5dee2dee9da0",
+    "host-preservation.json": "d69cf2e545f1348928bde8ba54c0f66aa8fe8254e2ba42f242fd5dee2dee9da0",
+    "partial-update.json": "5ad029517fa65ce2e1a3ec6cdb5f338bbfe2f82bcb4589b1f21db972ba977dcb",
+    "shared-and-low-demand.json": "599f4ed64715e9cf786c0f61f5504e769ad5dd8fb5685711fb6e1a80dee61701",
+    "static-capacities-initial-under-offer.json": "ad2216cfecba1b9eb7c8cf3f084babf7d7cb552d201b98251ab13c16f0903038",
+    "static-capacities-progress.json": "84f93901a3a52761d92b5d7efedd2a6bb7c9774444522b4e219f52f6c91d0e8e",
+    "static-capacities.json": "78eca1508522e3371b598ae81a46a3f95b04e5ee62683e92fe9d8487be69ed16",
+    "timed-download-progress.json": "fb2f946a4cd1ee4af203d9a64600700c7385018b815679a3cea22225d84c8311",
+    "timed-download.json": "a1c3d898feeb444b491291157d43a9f546b532aaeb355d6d927c3d85849dda0a",
+    "timed-upload-progress.json": "bd198c653cc642b3ba4d1563d1f6cabe213cdd3f836c0b10a961d71a9df4501f",
+    "timed-upload.json": "bcffb58d5de59dd5a5c5335669cfcc53030cba3da44aacd9d8c00628e09fa7ae",
+    "unshaped-headroom.json": "b152970a370d1bdf641cce1aa930a777b3536578fc5657dd535f403ebcc66106"
+  },
+  "notes": [
+    "TCP delivery is verified by the routed lab regressions. The capacity check uses measured UDP offered load after a TCP trial under-delivered.",
+    "The full suite passed 200 cases. Its static IPv6 download probe under-offered. The targeted static test reran all eight directions and families with a higher offered load. Receiver and sender pass thresholds stayed the same. Only the requested offer in the static test changed between snapshots.",
+    "The timed verification uses 12-second plateaus. The distributed templates use longer plateaus for later experiments.",
+    "Controller service isolation requires future integration under its service identity. The current check verifies root-only live scenario file access.",
+    "This verification covers ISP bandwidth and buffering. Added delay/loss and adaptive controller acceptance remain later work."
+  ]
+}

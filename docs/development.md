@@ -2,7 +2,7 @@
 
 [Project README](../README.md) · [Design analysis](phase-03-analysis.md) · [Linux access](setup.md)
 
-The application package provides shared records, configuration validation and a labeled synthetic replay. Its commands run as the ordinary `qos` user. The observer, classifier algorithms, estimator algorithms, real actuator, watchdog, API and dashboard are later implementation steps.
+The application package provides shared records, configuration validation and a labeled synthetic replay. Its contract commands run as the ordinary `qos` user. The separate [step-04 lab runner](routed-lab.md) uses sudo in the dedicated VM to create real routed namespaces. The observer, classifier algorithms, estimator algorithms, real QoS actuator, watchdog, API and dashboard are later implementation steps.
 
 ## Install in the reference VM
 

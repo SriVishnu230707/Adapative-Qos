@@ -1,7 +1,7 @@
 """Offline setup validation and an explicitly smaller controller configuration."""
 
 import hashlib
-from ipaddress import ip_interface
+from ipaddress import ip_address, ip_interface, ip_network
 import json
 from pathlib import Path
 from typing import Annotated, Literal, Self
@@ -47,13 +47,14 @@ UniqueSafeLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
 class LabEndpoint(ValueModel):
     namespace: NamespaceName
     interface: InterfaceName
-    ipv4_cidr: str
-    ipv6_cidr: str
+    ipv4_cidr: str | None
+    ipv6_cidr: str | None
 
     @model_validator(mode="after")
     def addresses(self) -> Self:
-        if ip_interface(self.ipv4_cidr).version != 4 or ip_interface(self.ipv6_cidr).version != 6:
-            raise ValueError("lab endpoint CIDRs must match their address family")
+        for family, cidr in ((4, self.ipv4_cidr), (6, self.ipv6_cidr)):
+            if cidr is not None and ("%" in cidr or ip_interface(cidr).version != family):
+                raise ValueError("lab endpoint CIDRs must match their address family")
         return self
 
 
@@ -67,6 +68,8 @@ class LabLink(ValueModel):
         if self.a.namespace == self.b.namespace:
             raise ValueError("link endpoints must belong to different namespaces")
         for name in ("ipv4_cidr", "ipv6_cidr"):
+            if getattr(self.a, name) is None or getattr(self.b, name) is None:
+                continue  # An unnumbered bridge port is a layer-2 endpoint.
             first = ip_interface(getattr(self.a, name))
             second = ip_interface(getattr(self.b, name))
             if first.network != second.network or first.ip == second.ip:
@@ -75,11 +78,15 @@ class LabLink(ValueModel):
 
 
 class EmulatorProfile(ValueModel):
+    namespace: NamespaceName = "qos-isp"
+    download_interface: InterfaceName = "gw0"
+    upload_interface: InterfaceName = "srv0"
     initial_download_rate_bps: PositiveInt
     initial_upload_rate_bps: PositiveInt
     minimum_supported_download_rate_bps: PositiveInt
     minimum_supported_upload_rate_bps: PositiveInt
-    queue_limit_packets: PositiveInt
+    queue_limit_packets: Annotated[PositiveInt, Field(le=2**32-1)]
+    burst_bytes: Annotated[int, Field(ge=1500, le=1048576)] = 32768
 
     @model_validator(mode="after")
     def supported_envelope(self) -> Self:
@@ -90,6 +97,40 @@ class EmulatorProfile(ValueModel):
         return self
 
 
+class LabBridge(ValueModel):
+    namespace: NamespaceName
+    interface: InterfaceName
+    ports: Annotated[tuple[InterfaceName, ...], Field(min_length=2)]
+
+
+class LabRoute(ValueModel):
+    namespace: NamespaceName
+    address_family: Literal[4, 6]
+    destination: str
+    via: str
+    interface: InterfaceName
+
+    @field_validator("address_family", mode="before")
+    @classmethod
+    def integer_family(cls, value: object) -> object:
+        if type(value) is not int:
+            raise ValueError("route address_family must be an integer")
+        return value
+
+    @model_validator(mode="after")
+    def route_addresses(self) -> Self:
+        if "%" in self.via or ip_address(self.via).version != self.address_family:
+            raise ValueError("route next hop must match address family")
+        if self.destination != "default" and ip_network(self.destination).version != self.address_family:
+            raise ValueError("route destination must match address family")
+        return self
+
+
+class LabVerification(ValueModel):
+    clients: Annotated[tuple[NamespaceName, ...], Field(min_length=1, max_length=4)]
+    server: NamespaceName
+
+
 class LabConfig(ValueModel):
     schema_version: VersionOne
     namespaces: Annotated[tuple[NamespaceName, ...], Field(min_length=4)]
@@ -97,6 +138,10 @@ class LabConfig(ValueModel):
     links: Annotated[tuple[LabLink, ...], Field(min_length=3)]
     emulator: EmulatorProfile
     synthetic_traffic: Literal[True]
+    routers: tuple[NamespaceName, ...] = ()
+    routes: tuple[LabRoute, ...] = ()
+    bridges: tuple[LabBridge, ...] = ()
+    verification: LabVerification | None = None
 
     @field_validator("synthetic_traffic", mode="before")
     @classmethod
@@ -120,6 +165,48 @@ class LabConfig(ValueModel):
             self.gateway.upload_interface, self.gateway.download_interface
         )):
             raise ValueError("gateway target is not a declared link endpoint")
+        if len(set(self.routers)) != len(self.routers) or any(ns not in self.namespaces for ns in self.routers):
+            raise ValueError("routers must be unique declared namespaces")
+        by_endpoint = {(e.namespace, e.interface): e for link in self.links for e in (link.a, link.b)}
+        emulator = self.emulator
+        if (emulator.namespace == self.gateway.namespace
+                or emulator.download_interface == emulator.upload_interface
+                or any((emulator.namespace, iface) not in by_endpoint for iface in
+                       (emulator.download_interface, emulator.upload_interface))):
+            raise ValueError("ISP bindings must be distinct declared interfaces outside the gateway")
+        addresses = [ip_interface(cidr).ip for e in by_endpoint.values() for cidr in (e.ipv4_cidr, e.ipv6_cidr) if cidr]
+        if len(set(addresses)) != len(addresses):
+            raise ValueError("duplicate lab IP address")
+        bridge_ids, bridged_ports = set(), set()
+        for bridge in self.bridges:
+            identity = (bridge.namespace, bridge.interface)
+            if bridge.namespace not in self.namespaces or identity in bridge_ids or identity in by_endpoint:
+                raise ValueError("bridge must have a unique interface in a declared namespace")
+            bridge_ids.add(identity)
+            for port in bridge.ports:
+                key = (bridge.namespace, port)
+                if key not in by_endpoint or key in bridged_ports:
+                    raise ValueError("bridge ports must be unique declared endpoints")
+                if by_endpoint[key].ipv4_cidr or by_endpoint[key].ipv6_cidr:
+                    raise ValueError("bridge ports must be unnumbered")
+                bridged_ports.add(key)
+        route_ids = set()
+        for route in self.routes:
+            identity = (route.namespace, route.address_family, route.destination)
+            endpoint = by_endpoint.get((route.namespace, route.interface))
+            cidr = getattr(endpoint, f"ipv{route.address_family}_cidr", None)
+            if identity in route_ids or cidr is None:
+                raise ValueError("route must have a unique destination and a numbered local interface")
+            route_ids.add(identity)
+            local = ip_interface(cidr)
+            if ip_address(route.via) not in local.network or ip_address(route.via) == local.ip:
+                raise ValueError("route next hop must be another address on the local subnet")
+        if self.verification:
+            v = self.verification
+            if (len(set(v.clients)) != len(v.clients) or v.server in v.clients
+                    or any(ns not in self.namespaces for ns in (*v.clients, v.server))
+                    or any(ns in self.routers for ns in (*v.clients, v.server))):
+                raise ValueError("verification clients/server must be distinct declared endpoints")
         return self
 
 
@@ -289,3 +376,8 @@ def load_config_bundle(config_dir: str | Path) -> ConfigBundle:
         if getattr(runtime.safe_policy.assumptions, name) != getattr(lab.emulator, name):
             raise ConfigurationError("fallback assumptions differ from the lab envelope")
     return ConfigBundle(lab=lab, runtime=runtime)
+
+
+def load_lab_config(path: str | Path) -> tuple[LabConfig, str]:
+    """Runner-only topology loader; never called by the runtime controller loader."""
+    return _load(Path(path), LabConfig)

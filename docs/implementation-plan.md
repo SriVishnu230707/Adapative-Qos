@@ -171,16 +171,18 @@ Use these initial routed IPv4 networks, without NAT:
 | Link | Left address | Right address |
 | --- | --- | --- |
 | Client ↔ gateway | client `10.10.0.2/24` | gateway `lan0:10.10.0.1/24` |
-| Gateway ↔ ISP | gateway `wan0:10.20.0.2/30` | ISP `gw0:10.20.0.1/30` |
+| Gateway ↔ ISP | gateway `wan0:10.20.0.1/30` | ISP `gw0:10.20.0.2/30` |
 | ISP ↔ server | ISP `srv0:10.30.0.1/24` | server `10.30.0.2/24` |
 
-Set client default route through `10.10.0.1`, gateway default through `10.20.0.1`, ISP route to `10.10.0.0/24` through `10.20.0.2`, and server default through `10.30.0.1`. Enable IPv4 forwarding inside `qos-gw` and `qos-isp`; bring every namespace loopback and link up.
+Set client default route through `10.10.0.1`, gateway default through `10.20.0.2`, ISP route to `10.10.0.0/24` through `10.20.0.1`, and server default through `10.30.0.1`. Enable IPv4 forwarding inside `qos-gw` and `qos-isp`; bring every namespace loopback and link up. These assignments agree with the implemented `configs/lab.yaml`.
 
-Add IPv6 in this lab early: for example `fd42:10:1::/64`, `fd42:10:2::/64` and `fd42:10:3::/64` for the same three links, with equivalent forward and return routes and IPv6 forwarding. ULA addressing is sufficient for an isolated IPv6 demonstration. No public IPv6 subscription is necessary for this local test. Preserve Neighbor Discovery and Packet Too Big traffic when installing filtering rules.
+Add IPv6 in this lab early: `fd42:ad:10::/64`, `fd42:ad:20::/64` and `fd42:ad:30::/64` are the implemented networks for the same three links, with equivalent forward and return routes and IPv6 forwarding. ULA addressing is sufficient for an isolated IPv6 demonstration. No public IPv6 subscription is necessary for this local test. Preserve Neighbor Discovery and Packet Too Big traffic when installing filtering rules.
 
 Then replace the single-client link with a Linux bridge in a dedicated `qos-lan` namespace. Attach separate clients for call-like traffic, gaming-like traffic, TVs and bulk transfer. A device then has its own IP identity. Three streams from one namespace are three flows, not three household devices.
 
 Make `lab/up.sh` create only resources with the project prefix and record what it owns. Make `lab/down.sh` terminate tracked workload processes and remove only those resources. Re-running setup should either reconcile a known lab or fail clearly; it must not duplicate links or leave stale policy state.
+
+The single-client and four-device bridge topologies support scripted setup, inspection, IPv4/IPv6 transfer verification, and cleanup. Private namespace bind mounts preserve ownership because an unpinned inode can be reused after deletion. [Routed lab guide](routed-lab.md) · [Step 4 verification](environments/phase-04-verification.json)
 
 **Separate two different kinds of shaping:**
 
@@ -190,6 +192,8 @@ Make `lab/up.sh` create only resources with the project prefix and record what i
 Start with 100 Mbit/s download and 20 Mbit/s upload as a chosen scenario configuration. The emulator's actual rates, queue limits and future change times must not be available to the controller process. Only the runner and post-run analyzer may read them. Reading a shared scenario file would invalidate the capacity-estimation demonstration.
 
 Optional propagation delay/loss should be added in a separately documented impairment stage. Validate its placement and achieved delay before measuring algorithms. [`netem`](https://man7.org/linux/man-pages/man8/tc-netem.8.html) documents timer, qdisc-composition and TCP Small Queues limitations; its receiver-ingress guidance matters for realistic TCP tests. Do not accidentally replace the capacity or CAKE qdisc when adding delay.
+
+Step 05 implements the two ISP limits with HTB and FIFO queues. The runner verifies rates in the kernel, changes the classes on a monotonic schedule, and records actual transition times in a root-only journal. The packaged profiles exercise a drop and recovery in each direction. [ISP emulation guide](isp-emulation.md)
 
 **Completion gate:** IPv4/IPv6 ping, upload and download traverse both routed namespaces; return paths work; changing the ISP rate changes achievable throughput; reset restores the same topology. `inspect.sh` prints addresses, routes, forwarding flags and queue state.
 
