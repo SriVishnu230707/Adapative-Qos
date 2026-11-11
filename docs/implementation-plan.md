@@ -263,6 +263,8 @@ Use monotonic time for elapsed durations. RTT needs no cross-machine clock synch
 
 Log a quiet period, then add load, then stop it. Verify that your provider FIFO can produce observable delay when overloaded. If it does not, inspect placement, queue size and actual offered load rather than inventing a bufferbloat result.
 
+The Step 6 runner uses one device per workload and captures these windows for IPv4 and IPv6. It saves raw endpoint records and network snapshots, then derives the summary from those files. [Operating guide](uncontrolled-baseline.md) · [Reference measurements](environments/phase-06-verification.json)
+
 **Completion gate:** saved raw data shows the traffic rate, interactive probe behavior, queue evolution and application delivery for an uncontrolled run. Each measured quantity has a definition and a collector.
 
 <a name="step-5"></a>

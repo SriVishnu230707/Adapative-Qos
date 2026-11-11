@@ -1,3 +1,3 @@
 # Experiments
 
-Reserved for the later scenario runner and offline evaluator. Hidden bandwidth schedules and workload ground truth belong here, outside controller configuration and runtime inputs.
+Phase 5 provides ISP capacity schedules in `scenarios/`. Step 6 adds a fixed-capacity baseline with quiet, loaded, and recovery windows. The runner writes raw captures and synthetic workload ground truth to a private directory for offline evaluation. [Baseline operating guide](../docs/uncontrolled-baseline.md)

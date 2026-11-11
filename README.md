@@ -14,6 +14,7 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 - **[Phase 5 design analysis](docs/phase-05-analysis.md):** independent ISP bottlenecks, scenario timing, lifecycle changes and the required verification plan.
 - **[ISP emulation guide](docs/isp-emulation.md)** covers bandwidth profiles, scenario commands and evidence export.
 - **[Phase 5 verification](docs/environments/phase-05-verification.json)** records measured static and timed rates, recovery checks and the reference VM configuration.
+- **[Step 6 baseline](docs/uncontrolled-baseline.md)** documents the synthetic workloads, raw capture format, and metric definitions.
 - **[Phase 3 verification](docs/environments/phase-03-verification.json):** Linux/Windows test results, source hashes and fresh-wheel installation evidence.
 - **[Implementation checklist](docs/implementation-checklist.md):** 16 ordered build steps with tasks, expected outputs and completion checks.
 - **[Detailed implementation plan](docs/implementation-plan.md):** architecture, module design, algorithms, experiments and acceptance evidence.
@@ -29,9 +30,9 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 
 ## Current status
 
-Steps 01–05 are complete. The routed IPv4/IPv6 lab supports single-client and four-device configurations, with independently controlled ISP upload and download limits. Phase 5 verified 201 Linux test cases across the full suite and a targeted static-capacity rerun. Windows passed 185 tests with 16 skips. The reference Ubuntu VM uses one vCPU and 3 GiB RAM.
+Steps 01–06 are complete. The routed IPv4/IPv6 lab supports single-client and four-device configurations with independently controlled ISP limits. Step 6 captured quiet, loaded, and recovery measurements for four synthetic devices in each IP family. [Step 6 verification](docs/environments/phase-06-verification.json)
 
-Workloads and the uncontrolled baseline are step 06. The observer, classifier, estimator, QoS actuator, dashboard and full QoS acceptance experiments follow.
+Static gateway QoS is step 07. The observer, classifier, estimator, adaptive actuator, dashboard and full QoS acceptance experiments follow.
 
 ## Run the phase-3 checks
 

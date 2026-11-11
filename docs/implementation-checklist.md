@@ -4,7 +4,7 @@
 
 Implement these steps in order. Each step produces something you can inspect or run. Advance after its completion check passes.
 
-Steps 01–05 are complete. The verified foundation includes the Linux environment, shared contracts, routed IPv4/IPv6 lab and independent ISP emulator. The later tasks cover the remaining algorithms, enforcement and full QoS runtime acceptance. Linux CAKE, Python, nftables and conntrack are project choices.
+Steps 01–06 are complete. The verified foundation includes the Linux environment, shared contracts, routed IPv4/IPv6 lab, independent ISP emulator, and uncontrolled workload measurements. The later tasks cover the remaining algorithms, enforcement and full QoS runtime acceptance. Linux CAKE, Python, nftables and conntrack are project choices.
 
 <a name="step-01"></a>
 
@@ -96,15 +96,13 @@ Verification covered all eight static direction and address-family combinations,
 
 **06. Generate traffic and save the uncontrolled baseline**
 
-- [ ] Run TCP upload/download and simultaneous latency measurements.
-- [ ] Add call-like UDP, game-like echo, TV-like segment downloads and bulk workloads.
-- [ ] Put household devices in separate namespaces for device-fairness tests.
-- [ ] Save endpoint measurements, interface counters, queue observations and actual event times.
-- [ ] Label synthetic workloads and keep their ground-truth labels out of classifier inputs.
+- [x] Run simultaneous TCP upload, TCP download, and latency measurements.
+- [x] Add call-like UDP, game-like echo, TV-like segment downloads, and bulk workloads.
+- [x] Put household devices in separate namespaces for device-fairness tests.
+- [x] Save endpoint measurements, interface counters, queue observations, and actual event times.
+- [x] Keep the synthetic role mapping in the private offline capture directory.
 
-**Output:** workload scripts and the first raw uncontrolled run.
-
-**Complete when:** saved measurements show what contention does to interactive traffic and bulk delivery, with definitions for every reported metric.
+The IPv4 and IPv6 captures show interactive delivery, bulk goodput, segment deadlines, and ISP FIFO behavior through quiet, loaded, and recovery windows. The raw runs are saved under `work/step06`. [Operating guide and metric definitions](uncontrolled-baseline.md) · [Verification record](environments/phase-06-verification.json)
 
 [Detailed guidance](implementation-plan.md#step-4)
 

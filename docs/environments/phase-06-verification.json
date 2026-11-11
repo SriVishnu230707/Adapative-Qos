@@ -1,0 +1,667 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "scope": "step-06 synthetic uncontrolled baseline",
+  "source_base_revision": "371f75b2073b5a909da88db87dee6963f48953c9",
+  "source_code_sha256": {
+    "configs/controller.yaml": "76b11083d18127ff997d85a063b1787665c2d90a4840992f725b4623ff3454d7",
+    "configs/lab-multi.yaml": "ecfcfc01f2f719e2f60773d8e7ece8ba0940079e898abb52516b2b61b1979f08",
+    "configs/lab.yaml": "9c0f9a355eda6a1f22e45d1d98c88d583a56f79b213a283f558a8c288790650b",
+    "configs/safe-policy.yaml": "a06004882a92d3d68b81206d76197b002c57179aa41e049657d039a2b80e3f0a",
+    "lab/create-seed.py": "14807947a704a79256d2b0933fb7035a140b2a5a90c1071f32b6aa9f99225681",
+    "lab/down.sh": "62f73058219a4cc93aa2a976b9dbfe6620ec8b4e26e6e31e788853395ef94f5a",
+    "lab/export-source.py": "254954bdd61692e4d38b116b57001d15688972cf47d9850b84c01d666cd546a2",
+    "lab/inspect.sh": "db30e56d47d2bb9d2f6ad89f0e5ace5409fee03c37e89a479bbe78c1d6c73673",
+    "lab/install-tools.sh": "89a6f2eaeab5a896b8f377b4a5593b177ce5baf4f4d20effd6095f79653f3d55",
+    "lab/isp_profile.sh": "61605e0731b1db2faad6b715227f4ff156ae949f788d917de3a94396dc5d16c1",
+    "lab/preflight.py": "882fde6d7260e29dc2509cd531ce4124793d2116663437a3c6eb8854929391d7",
+    "lab/preflight.sh": "4592a36cfb1f20ca12993f244c98fc1b75a3a03a52dc2267adfd10391989b913",
+    "lab/run-lab.sh": "0b307fb669003a5891e85f07ad28e884763c75efa18d8082801c1242c59f5caf",
+    "lab/up.sh": "ec7487d216bc41e07287b3e481668c76ae0ca658344a04cff72ce3771082c693",
+    "lab/verify.sh": "d50e8071ad15373562c22876b78c3b8faa29c46a48ad82eec100966f702a7b55",
+    "src/adaptive_qos/__init__.py": "18d911827ef32c3e5d6e211061532c8a450ebe569eda613f8f7542c78fad2f30",
+    "src/adaptive_qos/__main__.py": "f3e47c3bc304566ef1c540a2cd68ab8f19e436320d3ecc5ce92353f2b63b7371",
+    "src/adaptive_qos/baseline.py": "f4e44d402e61d5c4714b407f8fc89e0db6d50b1ca87f4113d212e27a5f21c403",
+    "src/adaptive_qos/cli.py": "94376bd0ad84e7e8f6669cd00c611c6039e9ef65918a434e9e01f82d86595663",
+    "src/adaptive_qos/clock.py": "8c9345728838446c96a9581a2b50c060dfef4f7ed95a3417d4a591742ff3dd03",
+    "src/adaptive_qos/config.py": "a202ae3c73fe78970bc71be630e2a6a151c2d6130fb4c5776799052eaf3f4f10",
+    "src/adaptive_qos/contracts.py": "0ad81811425dec00c547340f5122238a4b28c903f40c1f6ed422f9fb83381829",
+    "src/adaptive_qos/isp.py": "f80e9ad0a80764239d0cbeea32d1fdb0ff7a87218cccf15796583f46d3e24b9d",
+    "src/adaptive_qos/lab.py": "cff1a68f96b58c2b90805dc95821b1552f40236f8b7ec13184fa47e9503b49fe",
+    "src/adaptive_qos/models.py": "9c519ea4789c4ea6d79e505e5916bbf5ea2ae40a309466191cd00fd62c6ecd15",
+    "src/adaptive_qos/tc_readback.py": "d4b7193fe6e675c8b474dd848373e45a9a789fbc5f442d683dffea16c88e95ae",
+    "src/adaptive_qos/validation.py": "887449964567afbbec7e3884b22d88251f2c30566a9f69bfb13868b8e675472d",
+    "src/adaptive_qos/workload.py": "504b4c99673dca371d761fdb50d2fccc5538080ebcc51070ed658f0d2ce47520",
+    "tests/conftest.py": "d64248dc7900dff407f4607ef1a04acb255eda13d9249602bb4232ebeb4eb97f",
+    "tests/integration/test_isp_profiles.py": "a9c47cdb67f35a6b5bb4519b85d2de898fbe65d9dd6b6edc63540444003e7c1f",
+    "tests/integration/test_routed_lab.py": "315a89dc78a5cea3bc75ff5f530552c75ba2089eb75876e607ae4e62735841b7",
+    "tests/integration/udp_load.py": "6e8daa3d799a28a39852cf59a9ca9f3d8e32f2790a9877fd81792ea611242ee9",
+    "tests/test_preflight.py": "e605137885916717a51e2e448b6145cfab0348011fca1cec37217e121a39c6fe",
+    "tests/unit/test_baseline.py": "1f2d669321163fa2399612855d6249d3288927a4b3506c2fa4a6d40ee78ca013",
+    "tests/unit/test_cli_contracts.py": "292daf6cc89570c8f28d3ab336caf7b99d8a1ceb1016f3965aef11c36c4fa907",
+    "tests/unit/test_clock_context.py": "0a7a2b281c4353ebeeb0d296dd69c00751b830ea7459999d43f0bfa35a093200",
+    "tests/unit/test_config.py": "da31b2a2cba76bff77bd57535827bd936e601df41eef11bed454213b0badb931",
+    "tests/unit/test_isp.py": "918480e32e2994654b75f1877a9c6c8ba5c919b3d6d51c9aa334bab8de9301ee",
+    "tests/unit/test_lab.py": "5e0d8918402ee91372b9b37975a3d4e6b2cca782a71212e456a1d912f84a26bd",
+    "tests/unit/test_models.py": "4df18fc02b97f801193c0620f2c1c81307f4b11ebc65bcfab7562ab164a8c145",
+    "tests/unit/test_source_export.py": "a5ec56b0a1dc0d4839c7144194b24a3fc2ebf28775d6c49ab94696449ab58399",
+    "tests/unit/test_tc_readback.py": "a1b7b10ad9e72e82b59c4cd81c9efa3b4b911de331bbf6f36ba61655546694de"
+  },
+  "linux_pytest": {
+    "tests": 203,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 15,
+    "passed": 188
+  },
+  "windows_pytest": {
+    "tests": 203,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 16,
+    "passed": 187
+  },
+  "runs": [
+    {
+      "raw_run_directory": "work/step06/reference-v4",
+      "manifest": {
+        "schema_version": 1,
+        "status": "pass",
+        "mode": "uncontrolled",
+        "synthetic": true,
+        "started_at_utc": "2026-11-11T15:52:56.606699+00:00",
+        "family": 4,
+        "requested_seconds": {
+          "quiet": 8,
+          "loaded": 18,
+          "recovery": 7
+        },
+        "environment": {
+          "kernel": "6.8.0-147-generic",
+          "python": "3.12.3",
+          "os": "Ubuntu 24.04.5 LTS",
+          "logical_cpus": 1
+        },
+        "lab_run_id": "867a21ff85684d9a9a2b5f542a517a62",
+        "boot_id": "e95cae69-1024-44ce-ba6d-30e262b4dec5",
+        "config_sha256": "ecfcfc01f2f719e2f60773d8e7ece8ba0940079e898abb52516b2b61b1979f08",
+        "isp_rates_bps": {
+          "download_bps": 20000000,
+          "upload_bps": 5000000
+        },
+        "isp_verified_ns": 927073450759,
+        "isp_bindings": [
+          {
+            "direction": "download",
+            "namespace": "qos-isp",
+            "interface": "gw0",
+            "ifindex": 2
+          },
+          {
+            "direction": "upload",
+            "namespace": "qos-isp",
+            "interface": "srv0",
+            "ifindex": 4
+          }
+        ],
+        "tools": {
+          "iperf3": "iperf 3.16 (cJSON 1.7.15)",
+          "tc": "tc utility, iproute2-6.1.0, libbpf 1.3.0"
+        },
+        "finished_at_utc": "2026-11-11T15:54:10.983308+00:00"
+      },
+      "summary": {
+        "schema_version": 1,
+        "family": 4,
+        "isp_rates_bps": {
+          "download_bps": 20000000,
+          "upload_bps": 5000000
+        },
+        "phases": {
+          "quiet": {
+            "window_ns": [
+              931883393356,
+              939889694004
+            ],
+            "game": {
+              "requests": 401,
+              "replies_within_deadline": 401,
+              "deadline_miss_pct": 0.0,
+              "median_rtt_ms": 0.490947,
+              "p95_rtt_ms": 1.836501,
+              "mean_absolute_rtt_change_ms": 0.5769144525
+            },
+            "call": {
+              "download": {
+                "packets_sent": 799,
+                "packets_delivered": 799,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 958045.4615973098,
+                "delivered_payload_bps": 958045.4615973098,
+                "mean_absolute_spacing_change_ms": 0.5318100854271357
+              },
+              "upload": {
+                "packets_sent": 798,
+                "packets_delivered": 798,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 956846.4059507549,
+                "delivered_payload_bps": 956846.4059507549,
+                "mean_absolute_spacing_change_ms": 0.49144559319899245
+              }
+            }
+          },
+          "loaded": {
+            "window_ns": [
+              940903419468,
+              956889694004
+            ],
+            "game": {
+              "requests": 800,
+              "replies_within_deadline": 477,
+              "deadline_miss_pct": 40.37500000000001,
+              "median_rtt_ms": 418.212937,
+              "p95_rtt_ms": 890.665675,
+              "mean_absolute_rtt_change_ms": 6.556772163865547
+            },
+            "call": {
+              "download": {
+                "packets_sent": 1588,
+                "packets_delivered": 1588,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 953618.0531411336,
+                "delivered_payload_bps": 953618.0531411336,
+                "mean_absolute_spacing_change_ms": 3.75918143464467
+              },
+              "upload": {
+                "packets_sent": 1588,
+                "packets_delivered": 1574,
+                "loss_pct": 0.8816120906801062,
+                "offered_payload_bps": 953618.0531411336,
+                "delivered_payload_bps": 945210.8410857333,
+                "mean_absolute_spacing_change_ms": 6.585301020578778
+              }
+            }
+          },
+          "recovery": {
+            "window_ns": [
+              966528953456,
+              973528953456
+            ],
+            "game": {
+              "requests": 350,
+              "replies_within_deadline": 350,
+              "deadline_miss_pct": 0.0,
+              "median_rtt_ms": 0.5340845000000001,
+              "p95_rtt_ms": 2.059293,
+              "mean_absolute_rtt_change_ms": 0.6722231518624642
+            },
+            "call": {
+              "download": {
+                "packets_sent": 696,
+                "packets_delivered": 696,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 954514.2857142857,
+                "delivered_payload_bps": 954514.2857142857,
+                "mean_absolute_spacing_change_ms": 0.5945952170767005
+              },
+              "upload": {
+                "packets_sent": 698,
+                "packets_delivered": 698,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 957257.1428571428,
+                "delivered_payload_bps": 957257.1428571428,
+                "mean_absolute_spacing_change_ms": 0.6625545856115108
+              }
+            }
+          }
+        },
+        "bulk": {
+          "download": {
+            "receiver": "client",
+            "payload_bytes": 12976128,
+            "duration_seconds": 18.001937,
+            "goodput_bps": 5766547.455421046
+          },
+          "upload": {
+            "receiver": "server",
+            "payload_bytes": 9568256,
+            "duration_seconds": 21.659207,
+            "goodput_bps": 3534111.29040874
+          }
+        },
+        "isp_fifo": {
+          "download": {
+            "interface": "qos-isp/gw0",
+            "fifo_drop_delta_packets": 0,
+            "peak_sampled_backlog_bytes": {
+              "quiet": 0,
+              "loaded": 73246,
+              "recovery": 0
+            }
+          },
+          "upload": {
+            "interface": "qos-isp/srv0",
+            "fifo_drop_delta_packets": 435,
+            "peak_sampled_backlog_bytes": {
+              "quiet": 0,
+              "loaded": 2017402,
+              "recovery": 0
+            }
+          }
+        },
+        "network_sample_count": 70,
+        "interface_counter_deltas": [
+          {
+            "namespace": "qos-gw",
+            "interface": "wan0",
+            "rx_bytes": 26338456,
+            "tx_bytes": 21292439
+          },
+          {
+            "namespace": "qos-gw",
+            "interface": "lan0",
+            "rx_bytes": 21292859,
+            "tx_bytes": 26338666
+          },
+          {
+            "namespace": "qos-isp",
+            "interface": "gw0",
+            "rx_bytes": 21292439,
+            "tx_bytes": 26338456
+          },
+          {
+            "namespace": "qos-isp",
+            "interface": "srv0",
+            "rx_bytes": 26338456,
+            "tx_bytes": 20414623
+          }
+        ],
+        "tv": {
+          "attempted_segments": 9,
+          "completed_segments": 0,
+          "deadline_misses": 9,
+          "received_payload_bytes": 552523
+        }
+      },
+      "file_sha256": {
+        "bulk-download-client.json": "a3a4e9b26a79dd1aee90c200990911c72fb581aef5719d80b241b4c6b4101a56",
+        "bulk-download-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bulk-download-server.json": "57f2a3024e36312509ad685d47d20cb694b88caf1dbc4ba5bf204e385f2e28c0",
+        "bulk-download-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bulk-upload-client.json": "d66a448ab0f6d1d192dc3643b3d97d63277bc25fa5bbb54fbcc3701c30ffdeb2",
+        "bulk-upload-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bulk-upload-server.json": "3c07e86009d49492ba6dce685753623ad7e361bd0ba50efe66e1ba4d6c0ac3b7",
+        "bulk-upload-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-download-receiver.jsonl": "f66a253f3c2385449f0317c8cf9d2e19bba4116b0831090a0a641fbf0a7afc5f",
+        "call-download-receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-download-sender.jsonl": "aa72717dc654bd6d753a260f503f91a0671a11a6cb1125234299eca72193c0aa",
+        "call-download-sender.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-upload-receiver.jsonl": "506f1a3dc9fbf393c4cf8bb40d782ae5b13a2d6812579beb46dfdd6606da8263",
+        "call-upload-receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-upload-sender.jsonl": "48bf4dd7eb25868bab9f287fe992c11cd7bd3caf6c6ef4f3f9e540b12e21895c",
+        "call-upload-sender.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "echo-client.jsonl": "20a728dc7c1d0217815859838985d901ac424b1bdf85dd246cdbe92d7ef2a7be",
+        "echo-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "echo-server.jsonl": "cf77e0400cef878deea1aaf4cfccf1cfe7f0c6136141cbaed6770b393d985583",
+        "echo-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "events.jsonl": "3016e5ead432b08e5a13a8a18c0dc900363b545787acef44cc4be2ac74acd227",
+        "ground-truth.json": "24d70f5eb7adad1649f9a9b44979b5311c28608dee9e740debe18fcec7f180a2",
+        "manifest.json": "2edef82321ab3995494d94976dbb848eaec528fa5f93ffaa65db38ab8eb89843",
+        "summary.json": "95f9943cb1d9901ca51f9c725282ff2fcaaf85a5477a1b9e12930d219a475de1",
+        "timeline.json": "b6fe23bd0c40befa80198e167cbc9db4d8b676804fac3759b5d18570c08b244a",
+        "tv-client.jsonl": "7b8f7c94df9848d9aa5350b2f09d80d7037a84345538357a6dec4030fbd7558c",
+        "tv-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tv-server.jsonl": "ab8e393ae82e72235747c7584a010d82dd28b0a5dec25ae6380c6c2fe5caa33a",
+        "tv-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "raw_run_directory": "work/step06/reference-v6",
+      "manifest": {
+        "schema_version": 1,
+        "status": "pass",
+        "mode": "uncontrolled",
+        "synthetic": true,
+        "started_at_utc": "2026-11-11T15:54:12.408540+00:00",
+        "family": 6,
+        "requested_seconds": {
+          "quiet": 8,
+          "loaded": 18,
+          "recovery": 7
+        },
+        "environment": {
+          "kernel": "6.8.0-147-generic",
+          "python": "3.12.3",
+          "os": "Ubuntu 24.04.5 LTS",
+          "logical_cpus": 1
+        },
+        "lab_run_id": "867a21ff85684d9a9a2b5f542a517a62",
+        "boot_id": "e95cae69-1024-44ce-ba6d-30e262b4dec5",
+        "config_sha256": "ecfcfc01f2f719e2f60773d8e7ece8ba0940079e898abb52516b2b61b1979f08",
+        "isp_rates_bps": {
+          "download_bps": 20000000,
+          "upload_bps": 5000000
+        },
+        "isp_verified_ns": 1002807001908,
+        "isp_bindings": [
+          {
+            "direction": "download",
+            "namespace": "qos-isp",
+            "interface": "gw0",
+            "ifindex": 2
+          },
+          {
+            "direction": "upload",
+            "namespace": "qos-isp",
+            "interface": "srv0",
+            "ifindex": 4
+          }
+        ],
+        "tools": {
+          "iperf3": "iperf 3.16 (cJSON 1.7.15)",
+          "tc": "tc utility, iproute2-6.1.0, libbpf 1.3.0"
+        },
+        "finished_at_utc": "2026-11-11T15:55:26.239290+00:00"
+      },
+      "summary": {
+        "schema_version": 1,
+        "family": 6,
+        "isp_rates_bps": {
+          "download_bps": 20000000,
+          "upload_bps": 5000000
+        },
+        "phases": {
+          "quiet": {
+            "window_ns": [
+              1007032143862,
+              1015034474815
+            ],
+            "game": {
+              "requests": 400,
+              "replies_within_deadline": 400,
+              "deadline_miss_pct": 0.0,
+              "median_rtt_ms": 0.5069159999999999,
+              "p95_rtt_ms": 2.01512,
+              "mean_absolute_rtt_change_ms": 0.621254388471178
+            },
+            "call": {
+              "download": {
+                "packets_sent": 798,
+                "packets_delivered": 798,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 957321.0661985977,
+                "delivered_payload_bps": 957321.0661985977,
+                "mean_absolute_spacing_change_ms": 0.5555587484276729
+              },
+              "upload": {
+                "packets_sent": 799,
+                "packets_delivered": 799,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 958520.7166574931,
+                "delivered_payload_bps": 958520.7166574931,
+                "mean_absolute_spacing_change_ms": 0.6271381580928482
+              }
+            }
+          },
+          "loaded": {
+            "window_ns": [
+              1016043134076,
+              1032034474815
+            ],
+            "game": {
+              "requests": 799,
+              "replies_within_deadline": 463,
+              "deadline_miss_pct": 42.052565707133915,
+              "median_rtt_ms": 527.59095,
+              "p95_rtt_ms": 908.96087,
+              "mean_absolute_rtt_change_ms": 6.8884187792207765
+            },
+            "call": {
+              "download": {
+                "packets_sent": 1585,
+                "packets_delivered": 1585,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 951514.963525911,
+                "delivered_payload_bps": 951514.963525911,
+                "mean_absolute_spacing_change_ms": 4.51975242302799
+              },
+              "upload": {
+                "packets_sent": 1583,
+                "packets_delivered": 1577,
+                "loss_pct": 0.37902716361338795,
+                "offered_payload_bps": 950314.3137296638,
+                "delivered_payload_bps": 946712.3643409222,
+                "mean_absolute_spacing_change_ms": 7.308549092948718
+              }
+            }
+          },
+          "recovery": {
+            "window_ns": [
+              1040783976612,
+              1047783976612
+            ],
+            "game": {
+              "requests": 347,
+              "replies_within_deadline": 347,
+              "deadline_miss_pct": 0.0,
+              "median_rtt_ms": 0.497044,
+              "p95_rtt_ms": 2.037746,
+              "mean_absolute_rtt_change_ms": 0.6225376329479769
+            },
+            "call": {
+              "download": {
+                "packets_sent": 693,
+                "packets_delivered": 693,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 950400.0,
+                "delivered_payload_bps": 950400.0,
+                "mean_absolute_spacing_change_ms": 0.557128017366136
+              },
+              "upload": {
+                "packets_sent": 692,
+                "packets_delivered": 692,
+                "loss_pct": 0.0,
+                "offered_payload_bps": 949028.5714285715,
+                "delivered_payload_bps": 949028.5714285715,
+                "mean_absolute_spacing_change_ms": 0.6261235021770682
+              }
+            }
+          }
+        },
+        "bulk": {
+          "download": {
+            "receiver": "client",
+            "payload_bytes": 14024704,
+            "duration_seconds": 18.000801,
+            "goodput_bps": 6232924.412641415
+          },
+          "upload": {
+            "receiver": "server",
+            "payload_bytes": 9437184,
+            "duration_seconds": 21.498915,
+            "goodput_bps": 3511687.5433016038
+          }
+        },
+        "isp_fifo": {
+          "download": {
+            "interface": "qos-isp/gw0",
+            "fifo_drop_delta_packets": 0,
+            "peak_sampled_backlog_bytes": {
+              "quiet": 0,
+              "loaded": 371654,
+              "recovery": 0
+            }
+          },
+          "upload": {
+            "interface": "qos-isp/srv0",
+            "fifo_drop_delta_packets": 340,
+            "peak_sampled_backlog_bytes": {
+              "quiet": 0,
+              "loaded": 1930896,
+              "recovery": 0
+            }
+          }
+        },
+        "network_sample_count": 70,
+        "interface_counter_deltas": [
+          {
+            "namespace": "qos-gw",
+            "interface": "wan0",
+            "rx_bytes": 26432812,
+            "tx_bytes": 20614046
+          },
+          {
+            "namespace": "qos-gw",
+            "interface": "lan0",
+            "rx_bytes": 20615710,
+            "tx_bytes": 26434484
+          },
+          {
+            "namespace": "qos-isp",
+            "interface": "gw0",
+            "rx_bytes": 20614046,
+            "tx_bytes": 26432812
+          },
+          {
+            "namespace": "qos-isp",
+            "interface": "srv0",
+            "rx_bytes": 26432804,
+            "tx_bytes": 19920894
+          }
+        ],
+        "tv": {
+          "attempted_segments": 9,
+          "completed_segments": 0,
+          "deadline_misses": 9,
+          "received_payload_bytes": 280823
+        }
+      },
+      "file_sha256": {
+        "bulk-download-client.json": "df955167715e66eeb116d55a3949eb7867a6f1a50c21a62d02310c8b9e510553",
+        "bulk-download-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bulk-download-server.json": "b336e84dbda344bf61dc52c45265e98681f34e72b1c1e2f1d4751f464acf03e0",
+        "bulk-download-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bulk-upload-client.json": "fdeaf6f05e9cee89ba604ef6295d07ca4845d1734c4705a53db33bd70da01bab",
+        "bulk-upload-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bulk-upload-server.json": "874650f4de62bc081db0685b65244e26eb7d62ee3c0af49b9bf72059b070d155",
+        "bulk-upload-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-download-receiver.jsonl": "e1ab9df441d15e6630aad014b6566262878bbe365e4ab675b39f8327b1e5f55d",
+        "call-download-receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-download-sender.jsonl": "120203cdf5bee825f0384fc3d352ddf7bb043bd642e1794e18cc05ffaa9b59b9",
+        "call-download-sender.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-upload-receiver.jsonl": "e8070ec686d49e1468bfa89c7830d43db97bc49629921bd71efeee7e9671af0b",
+        "call-upload-receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "call-upload-sender.jsonl": "a3d1850ccb21a8c24ec527fcc6a5ac669dc7cde5286cb6710af0afae68a3aee3",
+        "call-upload-sender.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "echo-client.jsonl": "c1f112c03bb29f4c44026a29216861e9cbc03f934d9d5e2c664aff8e1d87ff0d",
+        "echo-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "echo-server.jsonl": "7ddc742678da7a8512d7a39725935e69c42e50912448cfdb9bd499da22158f2a",
+        "echo-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "events.jsonl": "bf23bc1227b112c285eed55b35ca4a02080327bd5bcf8ae3ee1c402527301c4e",
+        "ground-truth.json": "24d70f5eb7adad1649f9a9b44979b5311c28608dee9e740debe18fcec7f180a2",
+        "manifest.json": "79776d961c07c74a0363c8a2ba749bd3760b6f187f57cb6e814ad444fe6d396f",
+        "summary.json": "5de8d7603602d722ca530f8579ebdc42030e5500fd6e6812f908c656d7a5160c",
+        "timeline.json": "2df9dc2284ff8b01c7a8a45ecfa55fdd3d6925b5a3c0c10d5aa41f22bb9e7d83",
+        "tv-client.jsonl": "2e1f9911a6a53815063522dbdb5080432df02fbd1774965730767101a794d534",
+        "tv-client.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tv-server.jsonl": "883aab0ee76bf65547b9eba471df626437d466edafcf4ad16a9576497b2bfb7e",
+        "tv-server.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "post_run": {
+    "status": "ready",
+    "run_id": "867a21ff85684d9a9a2b5f542a517a62",
+    "readback": {
+      "download_bps": 100000000,
+      "upload_bps": 20000000
+    },
+    "scenario_worker_active": false,
+    "leftover_processes": {}
+  },
+  "tv_without_background_traffic": {
+    "isp_rates_bps": {
+      "download_bps": 20000000,
+      "upload_bps": 5000000
+    },
+    "raw_sha256": "6421b7bc7881ec85334c48a2f1ef7ba1aefa949d22364b799ed61f17054d7a86",
+    "segments_by_family": {
+      "4": [
+        {
+          "event": "segment",
+          "monotonic_ns": 1277062358065,
+          "scheduled_ns": 1276647111173,
+          "started_ns": 1276647981583,
+          "finished_ns": 1277062340222,
+          "deadline_ns": 1278647111173,
+          "received_bytes": 1000000,
+          "met_deadline": true,
+          "error": null
+        },
+        {
+          "event": "segment",
+          "monotonic_ns": 1279054708947,
+          "scheduled_ns": 1278647111173,
+          "started_ns": 1278647760889,
+          "finished_ns": 1279054692484,
+          "deadline_ns": 1280647111173,
+          "received_bytes": 1000000,
+          "met_deadline": true,
+          "error": null
+        },
+        {
+          "event": "segment",
+          "monotonic_ns": 1281059132905,
+          "scheduled_ns": 1280647111173,
+          "started_ns": 1280647776574,
+          "finished_ns": 1281059116334,
+          "deadline_ns": 1282647111173,
+          "received_bytes": 1000000,
+          "met_deadline": true,
+          "error": null
+        }
+      ],
+      "6": [
+        {
+          "event": "segment",
+          "monotonic_ns": 1287025373929,
+          "scheduled_ns": 1286615106794,
+          "started_ns": 1286615802282,
+          "finished_ns": 1287025353961,
+          "deadline_ns": 1288615106794,
+          "received_bytes": 1000000,
+          "met_deadline": true,
+          "error": null
+        },
+        {
+          "event": "segment",
+          "monotonic_ns": 1289028515628,
+          "scheduled_ns": 1288615106794,
+          "started_ns": 1288615409125,
+          "finished_ns": 1289028499634,
+          "deadline_ns": 1290615106794,
+          "received_bytes": 1000000,
+          "met_deadline": true,
+          "error": null
+        },
+        {
+          "event": "segment",
+          "monotonic_ns": 1291029874920,
+          "scheduled_ns": 1290615106794,
+          "started_ns": 1290615722653,
+          "finished_ns": 1291029860789,
+          "deadline_ns": 1292615106794,
+          "received_bytes": 1000000,
+          "met_deadline": true,
+          "error": null
+        }
+      ]
+    }
+  },
+  "notes": [
+    "The two address-family captures were run once each in the same one-vCPU lab VM.",
+    "The lower supported ISP rates were selected to produce contention within the lab workload envelope.",
+    "Initial attempts exposed endpoint startup and TCP completion timing issues. The final runs use endpoint readiness and a separate TCP drain period.",
+    "The raw captures include evaluator ground truth and are stored under the ignored work directory."
+  ]
+}
