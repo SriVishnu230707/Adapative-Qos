@@ -1,4 +1,9 @@
-from adaptive_qos.baseline import packet_metrics
+from copy import deepcopy
+
+import pytest
+
+from adaptive_qos.baseline import gateway_qos_delta, packet_metrics
+from adaptive_qos.lab import LabError
 from adaptive_qos.workload import SECOND
 
 
@@ -24,3 +29,16 @@ def test_echo_rtt_omits_late_and_missing_replies_and_counts_deadline_misses():
     metrics = packet_metrics(sent, arrived, (0, SECOND), echo=True)
     assert metrics == {"requests": 4, "replies_within_deadline": 2, "deadline_miss_pct": 50,
                        "median_rtt_ms": 5, "p95_rtt_ms": 6, "mean_absolute_rtt_change_ms": 2}
+
+
+def test_static_capture_rejects_queue_option_drift_with_unchanged_profile():
+    queue = {"kind": "cake", "dev": "wan0", "handle": "7101:",
+             "options": {"bandwidth": 562_500, "rtt": 100_000}, "packets": 5, "bytes": 512, "drops": 0,
+             "tins": [{"sent_packets": 5, "sent_bytes": 512, "drops": 0}]}
+    before = {"profile": {"mode": "besteffort"}, "queues": {"upload": queue, "download": deepcopy(queue)},
+              "marking": None}
+    after = deepcopy(before)
+    after["queues"]["upload"]["options"]["rtt"] = 30_000
+
+    with pytest.raises(LabError, match="upload CAKE queue configuration changed"):
+        gateway_qos_delta(before, after, 4)

@@ -38,6 +38,10 @@ def gateway_queues(targets):
     )
 
 
+def queue_configuration(row):
+    return {key: row[key] for key in ("kind", "dev", "handle", "options")}
+
+
 def table_name(state):
     # Kernel object names are derived from the journal and never supplied as CLI arguments.
     return "aqos_" + hashlib.sha256(state.run_id.encode()).hexdigest()[:24]
@@ -154,8 +158,14 @@ class Actuator:
             expected_tins = 4 if profile.mode == "diffserv4" else 1
             if len(row.get("tins", ())) != expected_tins:
                 raise LabError(f"CAKE tin statistics are unavailable on {queue.interface}")
+        settings = {direction: queue_configuration(row) for direction, row in roots.items()}
+        digest = hashlib.sha256(json.dumps(settings, sort_keys=True).encode()).hexdigest()
+        previous = state.static_qos.queue_config_sha256
+        if previous is not None and digest != previous:
+            raise LabError("CAKE queue configuration changed since verification")
         marks = self.read_marks(state) if profile.mode == "diffserv4" else None
-        return {"profile": profile.model_dump(mode="json"), "queues": roots, "marking": marks}
+        return {"profile": profile.model_dump(mode="json"), "queues": roots,
+                "queue_config_sha256": digest, "marking": marks}
 
     def inspect(self, state):
         self.scope(state)
@@ -207,7 +217,8 @@ class Actuator:
                             "ingress" if queue.ingress else "egress", "nonat", "nowash", "split-gso", "raw")
             actual = self.read(applying)
             digest = actual["marking"]["sha256"] if actual["marking"] else None
-            active = installation.model_copy(update={"phase": "active", "nft_sha256": digest})
+            active = installation.model_copy(update={"phase": "active", "nft_sha256": digest,
+                                                     "queue_config_sha256": actual["queue_config_sha256"]})
             self.lab.store.save(state.model_copy(update={"static_qos": active}))
         except BaseException as failure:
             try:

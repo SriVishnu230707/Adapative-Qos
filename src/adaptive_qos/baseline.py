@@ -13,7 +13,7 @@ import subprocess
 import sys
 import time
 
-from adaptive_qos.actuator import Actuator, TIN_ORDER
+from adaptive_qos.actuator import Actuator, TIN_ORDER, queue_configuration
 from adaptive_qos.isp import Isp
 from adaptive_qos.lab import Lab, LabError, OwnedProcess, process_start_ticks
 from adaptive_qos.workload import SECOND
@@ -258,6 +258,8 @@ def gateway_qos_delta(before, after, family):
     queues = {}
     for direction in ("upload", "download"):
         first, last = before["queues"][direction], after["queues"][direction]
+        if queue_configuration(first) != queue_configuration(last):
+            raise LabError(f"{direction} CAKE queue configuration changed during capture")
         queues[direction] = {
             "interface": last["dev"], "handle": last["handle"], "rate_bps": last["options"]["bandwidth"] * 8,
             **counters(first, last, ("packets", "bytes", "drops")),

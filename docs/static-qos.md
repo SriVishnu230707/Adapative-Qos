@@ -34,6 +34,8 @@ sudo bash lab/down.sh
 
 `inspect` reports the installed rates, queue and tin counters, and per-family marking counters. `restore` removes the journaled CAKE roots and marking table, then verifies the default gateway queues. Failed or interrupted applications retain sufficient journal state to retry restoration. A foreign queue or an altered marking table requires reconciliation before restoration. The independent watchdog and adaptive fallback belong to later steps.
 
+New installations record the verified kernel queue configuration in the journal. `inspect` rejects later changes to options such as CAKE's RTT setting. Restoration still works for the owned queues after their options change. Capture replay checks the before-and-after queue configuration in both directions, including in recordings created before the journal began storing it.
+
 ## Run a matched comparison
 
 Begin with a fresh lab and the ISP profile from the first three commands above. Run the same durations and workloads in each mode. Use a new output directory for every capture.

@@ -61,6 +61,10 @@ def test_kernel_readback_best_effort_and_dual_stack_marking(lab):
     assert active["marking"] is None
     assert {direction: row["dev"] for direction, row in active["queues"].items()} == {"upload": "wan0", "download": "lan0"}
     assert all(len(row["tins"]) == 1 for row in active["queues"].values())
+    lab.commands.inside("qos-gw", "tc", "qdisc", "change", "dev", "wan0", "root", "handle", "7101:",
+                        "cake", "rtt", "30ms")
+    with pytest.raises(LabError, match="CAKE queue configuration changed since verification"):
+        actuator.inspect(lab.state())
     assert actuator.restore(lab.state()) == {"status": "restored"}
 
     profile = load_static_profile(CONFIG / "static-qos.yaml")

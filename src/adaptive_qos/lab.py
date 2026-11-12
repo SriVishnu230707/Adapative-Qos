@@ -46,6 +46,7 @@ class StaticInstallation(ValueModel):
     upload_ifindex: PositiveInt
     download_ifindex: PositiveInt
     nft_sha256: str | None = None
+    queue_config_sha256: str | None = None
 
 
 class LabState(ValueModel):
