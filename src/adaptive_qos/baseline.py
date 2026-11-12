@@ -1,4 +1,4 @@
-"""Record an uncontrolled experiment in the isolated four-device lab."""
+"""Record and compare uncontrolled and static QoS runs in the four-device lab."""
 
 import argparse
 from datetime import datetime, timezone
@@ -13,6 +13,7 @@ import subprocess
 import sys
 import time
 
+from adaptive_qos.actuator import Actuator, TIN_ORDER
 from adaptive_qos.isp import Isp
 from adaptive_qos.lab import Lab, LabError, OwnedProcess, process_start_ticks
 from adaptive_qos.workload import SECOND
@@ -242,6 +243,37 @@ def packet_metrics(sent, received, window, *, echo=False):
             "mean_absolute_spacing_change_ms": mean(variation) if variation else None}
 
 
+def gateway_qos_delta(before, after, family):
+    profile = before["profile"]
+    if profile != after["profile"]:
+        raise LabError("static profile changed during capture")
+
+    def counters(first, last, keys):
+        values = {key: last[key] - first[key] for key in keys}
+        if any(value < 0 for value in values.values()):
+            raise LabError("static QoS counters reset during capture")
+        return values
+
+    services = TIN_ORDER if profile["mode"] == "diffserv4" else ("best_effort",)
+    queues = {}
+    for direction in ("upload", "download"):
+        first, last = before["queues"][direction], after["queues"][direction]
+        queues[direction] = {
+            "interface": last["dev"], "handle": last["handle"], "rate_bps": last["options"]["bandwidth"] * 8,
+            **counters(first, last, ("packets", "bytes", "drops")),
+            "tins": {service: counters(old, new, ("sent_packets", "sent_bytes", "drops"))
+                     for service, old, new in zip(services, first["tins"], last["tins"], strict=True)},
+        }
+    marking = {}
+    if before["marking"] is not None:
+        first, last = before["marking"], after["marking"]
+        if last is None or first["sha256"] != last["sha256"]:
+            raise LabError("static marking configuration changed during capture")
+        marking = {label: counters(old, last["counters"][label], ("packets", "bytes"))
+                   for label, old in first["counters"].items() if label.split(":")[1] == str(family)}
+    return {"profile": profile, "queues": queues, "marking_delta": marking}
+
+
 def summarize(output):
     info = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
     events = read_jsonl(output / "events.jsonl")
@@ -283,13 +315,17 @@ def summarize(output):
             counter_deltas.append({"namespace": namespace, "interface": first["interface"],
                                    **{f"{direction}_bytes": last["counters"][direction]["bytes"] -
                                       first["counters"][direction]["bytes"] for direction in ("rx", "tx")}})
-    return {"schema_version": 1, "family": info["family"], "isp_rates_bps": info["isp_rates_bps"],
+    result = {"schema_version": 1, "family": info["family"], "isp_rates_bps": info["isp_rates_bps"],
             "phases": phases, "bulk": bulk, "isp_fifo": queues, "network_sample_count": len(samples),
             "interface_counter_deltas": counter_deltas,
             "tv": {"attempted_segments": len(segments),
                    "completed_segments": sum(row["received_bytes"] == SEGMENT_SIZE for row in segments),
                    "deadline_misses": sum(not row["met_deadline"] for row in segments),
                    "received_payload_bytes": sum(row["received_bytes"] for row in segments)}}
+    if info["mode"] == "static":
+        before, after = (row["inspection"] for row in events if row["event"] == "static_qos_readback")
+        result["gateway_qos"] = gateway_qos_delta(before, after, info["family"])
+    return result
 
 
 def verify_baseline(summary, gateway):
@@ -310,16 +346,27 @@ def verify_baseline(summary, gateway):
     for direction, queue in summary["isp_fifo"].items():
         if queue["peak_sampled_backlog_bytes"]["loaded"] is None:
             raise LabError(f"no FIFO observation during loaded {direction}")
-    if not any(queue["peak_sampled_backlog_bytes"]["loaded"] > 0 or queue["fifo_drop_delta_packets"] > 0
-               for queue in summary["isp_fifo"].values()):
-        raise LabError("no ISP contention was observed during the baseline")
+    if "gateway_qos" not in summary:
+        if not any(queue["peak_sampled_backlog_bytes"]["loaded"] > 0 or queue["fifo_drop_delta_packets"] > 0
+                   for queue in summary["isp_fifo"].values()):
+            raise LabError("no ISP contention was observed during the baseline")
+        return
+    evidence = summary["gateway_qos"]
+    for direction, queue in evidence["queues"].items():
+        if queue["packets"] <= 0 or queue["bytes"] <= 0:
+            raise LabError(f"no traffic crossed the {direction} CAKE queue")
+        for mark in evidence["profile"]["marks"]:
+            service, device = mark["service_class"], mark["device"]
+            label = f"{direction}:{summary['family']}:{service}:{device}"
+            if (evidence["marking_delta"][label]["packets"] <= 0 or queue["tins"][service]["sent_packets"] <= 0):
+                raise LabError(f"no matching {direction} marking/tin progress for {device}")
 
 
-def run(output, family, durations):
+def run(output, family, durations, mode="uncontrolled"):
     output.mkdir(parents=True, mode=0o700, exist_ok=False)
     lab = Lab()
     isp = Isp(lab=lab)
-    info = {"schema_version": 1, "status": "running", "mode": "uncontrolled", "synthetic": True,
+    info = {"schema_version": 1, "status": "running", "mode": mode, "synthetic": True,
             "started_at_utc": datetime.now(timezone.utc).isoformat(), "family": family,
             "requested_seconds": dict(zip(("quiet", "loaded", "recovery"), durations)),
             "environment": {"kernel": platform.release(), "python": platform.python_version(),
@@ -340,9 +387,16 @@ def run(output, family, durations):
             provider = state.config.emulator.namespace
             namespaces = (gateway, provider)
             initial = sample_network(lab, namespaces)
-            if any(row["kind"] != "noqueue" for row in initial[gateway]["qdiscs"]):
-                raise LabError("the baseline requires the default gateway queues")
             rates = isp.actual(isp_state).model_dump()
+            actuator = Actuator(lab)
+            if mode == "static":
+                static_qos = actuator.inspect(state)
+                if static_qos["status"] != "active":
+                    raise LabError("apply a static QoS policy before capturing static mode")
+                if any(static_qos["profile"][key] >= rate for key, rate in rates.items()):
+                    raise LabError("static shaper rates must be below the selected ISP rates for this comparison")
+            elif state.static_qos is not None or any(row["kind"] != "noqueue" for row in initial[gateway]["qdiscs"]):
+                raise LabError("the uncontrolled baseline requires the default gateway queues")
             info.update(lab_run_id=state.run_id, boot_id=state.boot_id, config_sha256=state.config_sha256,
                         isp_rates_bps=rates, isp_verified_ns=time.monotonic_ns(),
                         isp_bindings=[binding.model_dump() for binding in isp_state.bindings],
@@ -362,8 +416,12 @@ def run(output, family, durations):
                     log.write(json.dumps({"event": event, "monotonic_ns": time.monotonic_ns(), **fields}) + "\n")
 
                 emit("network_sample", interfaces=initial)
+                if mode == "static":
+                    emit("static_qos_readback", inspection=static_qos)
                 run_workloads(lab, state, family, output, emit, durations, namespaces)
                 emit("network_sample", interfaces=sample_network(lab, namespaces))
+                if mode == "static":
+                    emit("static_qos_readback", inspection=actuator.inspect(lab.state()))
                 final_rates = isp.actual(isp_state).model_dump()
                 emit("isp_readback", rates_bps=final_rates)
                 if final_rates != rates:
@@ -381,16 +439,40 @@ def run(output, family, durations):
     return summary
 
 
+def compare(uncontrolled, static):
+    paths = (uncontrolled, static)
+    baseline_info, static_info = (json.loads((path / "manifest.json").read_text(encoding="utf-8")) for path in paths)
+    for mode, info in (("uncontrolled", baseline_info), ("static", static_info)):
+        if info["status"] != "pass" or info["mode"] != mode:
+            raise LabError(f"comparison requires a passing {mode} run")
+    for field in ("family", "config_sha256", "isp_rates_bps", "requested_seconds", "tools", "environment"):
+        if baseline_info[field] != static_info[field]:
+            raise LabError(f"comparison requires matching {field}")
+    before, after = (json.loads((path / "ground-truth.json").read_text(encoding="utf-8")) for path in paths)
+    if before != after:
+        raise LabError("comparison requires matching synthetic workload settings")
+    baseline, qos = (summarize(path) for path in paths)
+    old_rtt = baseline["phases"]["loaded"]["game"]["p95_rtt_ms"]
+    new_rtt = qos["phases"]["loaded"]["game"]["p95_rtt_ms"]
+    reduction = 100 * (old_rtt - new_rtt) / old_rtt if old_rtt and new_rtt is not None else None
+    return {"family": baseline_info["family"], "isp_rates_bps": baseline_info["isp_rates_bps"],
+            "loaded_p95_rtt_reduction_pct": reduction, "uncontrolled": baseline, "static": qos}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     capture = commands.add_parser("run")
     capture.add_argument("--output", type=Path, required=True)
     capture.add_argument("--family", type=int, choices=(4, 6), default=4)
+    capture.add_argument("--mode", choices=("uncontrolled", "static"), default="uncontrolled")
     for phase, default in (("quiet", 8), ("loaded", 18), ("recovery", 7)):
         capture.add_argument(f"--{phase}-seconds", type=int, default=default)
     replay = commands.add_parser("summarize")
     replay.add_argument("run_dir", type=Path)
+    pair = commands.add_parser("compare", help="compare matched uncontrolled and static captures")
+    pair.add_argument("uncontrolled", type=Path)
+    pair.add_argument("static", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.command == "run":
@@ -405,9 +487,11 @@ def main(argv=None):
                 raise KeyboardInterrupt
 
             signal.signal(signal.SIGTERM, interrupted)
-            result = run(args.output, args.family, durations)
-        else:
+            result = run(args.output, args.family, durations, args.mode)
+        elif args.command == "summarize":
             result = summarize(args.run_dir)
+        else:
+            result = compare(args.uncontrolled, args.static)
         print(json.dumps(result, indent=2, allow_nan=False))
         return 0
     except (LabError, OSError, ValueError, KeyError, StopIteration, subprocess.SubprocessError, KeyboardInterrupt) as exc:

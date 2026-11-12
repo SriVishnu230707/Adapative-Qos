@@ -15,6 +15,7 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 - **[ISP emulation guide](docs/isp-emulation.md)** covers bandwidth profiles, scenario commands and evidence export.
 - **[Phase 5 verification](docs/environments/phase-05-verification.json)** records measured static and timed rates, recovery checks and the reference VM configuration.
 - **[Step 6 baseline](docs/uncontrolled-baseline.md)** documents the synthetic workloads, raw capture format, and metric definitions.
+- **[Step 7 static QoS](docs/static-qos.md)** covers CAKE, dual-stack marking, restoration and matched workload comparisons.
 - **[Phase 3 verification](docs/environments/phase-03-verification.json):** Linux/Windows test results, source hashes and fresh-wheel installation evidence.
 - **[Implementation checklist](docs/implementation-checklist.md):** 16 ordered build steps with tasks, expected outputs and completion checks.
 - **[Detailed implementation plan](docs/implementation-plan.md):** architecture, module design, algorithms, experiments and acceptance evidence.
@@ -30,9 +31,9 @@ A reference-implementation project for intent-aware QoS on mixed home broadband 
 
 ## Current status
 
-Steps 01–06 are complete. The routed IPv4/IPv6 lab supports single-client and four-device configurations with independently controlled ISP limits. Step 6 captured quiet, loaded, and recovery measurements for four synthetic devices in each IP family. [Step 6 verification](docs/environments/phase-06-verification.json)
+Steps 01–07 are complete. The routed IPv4/IPv6 lab supports single-client and four-device configurations with independently controlled ISP limits. Static CAKE enforcement and restoration were verified in Ubuntu, with matched uncontrolled and static captures for both address families. [Step 7 verification](docs/environments/phase-07-verification.json)
 
-Static gateway QoS is step 07. The observer, classifier, estimator, adaptive actuator, dashboard and full QoS acceptance experiments follow.
+Step 08 is the metadata and metrics collector. The classifier, estimator, adaptive controller, dashboard and full QoS acceptance experiments follow.
 
 ## Run the phase-3 checks
 

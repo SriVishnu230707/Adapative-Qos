@@ -4,7 +4,7 @@
 
 Implement these steps in order. Each step produces something you can inspect or run. Advance after its completion check passes.
 
-Steps 01–06 are complete. The verified foundation includes the Linux environment, shared contracts, routed IPv4/IPv6 lab, independent ISP emulator, and uncontrolled workload measurements. The later tasks cover the remaining algorithms, enforcement and full QoS runtime acceptance. Linux CAKE, Python, nftables and conntrack are project choices.
+Steps 01–07 are complete. The verified foundation includes the Linux environment, shared contracts, routed IPv4/IPv6 lab, independent ISP emulator, and matched workload measurements with static CAKE enforcement. Linux CAKE, Python, nftables and conntrack are project choices.
 
 <a name="step-01"></a>
 
@@ -110,15 +110,17 @@ The IPv4 and IPv6 captures show interactive delivery, bulk goodput, segment dead
 
 **07. Implement static CAKE enforcement**
 
-- [ ] Apply fixed upload and download shaper rates on the gateway.
-- [ ] Verify queue traversal and collect actual `tc` statistics.
-- [ ] Introduce service classes and verified IPv4/IPv6 marking.
-- [ ] Implement policy validation, application, read-back verification and reconstructable restoration.
-- [ ] Confirm that lower-priority traffic still progresses.
+- [x] Apply fixed upload and download shaper rates on the gateway.
+- [x] Verify queue traversal and collect actual `tc` statistics.
+- [x] Introduce service classes and verified IPv4/IPv6 marking.
+- [x] Implement policy validation, application, read-back verification and reconstructable restoration.
+- [x] Confirm that lower-priority traffic still progresses.
 
-**Output:** `src/adaptive_qos/actuator.py`, marking configuration and static-QoS evidence.
+**Output:** [Static actuator](../src/adaptive_qos/actuator.py), [marking profile](../configs/static-qos.yaml) and [operating guide](static-qos.md).
 
 **Complete when:** fixed QoS changes measured network behavior, the intended service counters increase, and invalid configurations are rejected before mutation.
+
+Both address families passed the matched captures. The verification record includes kernel counters, bulk delivery, invalid-rate rejection, rollback and cleanup. [Step 7 verification](environments/phase-07-verification.json)
 
 [Detailed guidance](implementation-plan.md#step-5)
 

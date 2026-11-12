@@ -5,5 +5,6 @@
 - `phase-04-verification.json` records real IPv4/IPv6 TCP delivery in both topologies, repeated setup/reset, privileged lifecycle/failure checks, source hashes, environment versions and main-namespace preservation. It also records the namespace-inode reuse defect found during testing and the persistent-reference fix.
 - `phase-05-verification.json` records measured ISP throughput, scheduled transitions, queue traversal, failure recovery, private schedule access, test counts and source hashes. [Phase 5 verification](phase-05-verification.json)
 - `phase-06-verification.json` records the IPv4 and IPv6 uncontrolled workload summaries, raw capture hashes, test counts, and restored lab state. [Step 6 verification](phase-06-verification.json)
+- `phase-07-verification.json` records matched uncontrolled and static captures for IPv4 and IPv6, queue and marking counters, bulk progress, kernel checks and restoration. [Step 7 verification](phase-07-verification.json)
 
 The phase-3 example apply results are explicitly simulated. These files establish environment and contract verification; full QoS performance and recovery acceptance requires the later implementation and experiments. Historical snapshots are retained rather than rewritten to describe a different run.

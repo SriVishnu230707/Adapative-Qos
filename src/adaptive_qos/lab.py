@@ -20,7 +20,7 @@ import time
 import uuid
 from typing import Literal
 
-from adaptive_qos.config import LabConfig, load_lab_config
+from adaptive_qos.config import LabConfig, StaticProfile, load_lab_config
 from adaptive_qos.models import Identifier, NamespaceName, NonNegativeInt, PositiveInt, ValueModel, VersionOne
 
 
@@ -40,6 +40,14 @@ class OwnedProcess(ValueModel):
     namespace: NamespaceName
 
 
+class StaticInstallation(ValueModel):
+    phase: Literal["applying", "active", "restoring"]
+    profile: StaticProfile
+    upload_ifindex: PositiveInt
+    download_ifindex: PositiveInt
+    nft_sha256: str | None = None
+
+
 class LabState(ValueModel):
     schema_version: VersionOne = 1
     run_id: Identifier
@@ -49,11 +57,12 @@ class LabState(ValueModel):
     config_sha256: str
     owned: tuple[OwnedNamespace, ...] = ()
     processes: tuple[OwnedProcess, ...] = ()
+    static_qos: StaticInstallation | None = None
 
 
 class Commands:
-    def run(self, args, *, timeout=20):
-        result = subprocess.run(args, text=True, capture_output=True, timeout=timeout,
+    def run(self, args, *, timeout=20, input=None):
+        result = subprocess.run(args, text=True, input=input, capture_output=True, timeout=timeout,
                                 env={**os.environ, "LC_ALL": "C"}, check=False)
         if result.returncode:
             raise LabError(f"{' '.join(args)}: {(result.stderr or result.stdout).strip()[:2000]}")

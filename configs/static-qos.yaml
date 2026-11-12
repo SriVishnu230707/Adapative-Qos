@@ -1,0 +1,10 @@
+# Fixed settings for the reference comparison at 20 Mbit/s down and 5 Mbit/s up.
+schema_version: 1
+mode: diffserv4
+upload_bps: 4500000
+download_bps: 18000000
+marks:
+  - {device: qos-client, service_class: interactive}
+  - {device: qos-game, service_class: interactive}
+  - {device: qos-tv, service_class: streaming}
+  - {device: qos-bulk, service_class: background}

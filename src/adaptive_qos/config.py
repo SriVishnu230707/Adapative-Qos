@@ -16,6 +16,7 @@ from adaptive_qos.models import (
     NamespaceName,
     PositiveFloat,
     PositiveInt,
+    ServiceClass,
     ValueModel,
     VersionOne,
 )
@@ -319,6 +320,31 @@ class ConfigBundle(ValueModel):
     runtime: RuntimeConfig
 
 
+class DeviceMark(ValueModel):
+    device: NamespaceName
+    service_class: ServiceClass
+
+
+class StaticProfile(ValueModel):
+    """Operator-selected fixed QoS settings for the synthetic lab."""
+
+    schema_version: VersionOne
+    mode: Literal["besteffort", "diffserv4"]
+    upload_bps: PositiveInt
+    download_bps: PositiveInt
+    marks: Annotated[tuple[DeviceMark, ...], Field(max_length=32)] = ()
+
+    @model_validator(mode="after")
+    def coherent(self) -> Self:
+        if self.upload_bps % 8 or self.download_bps % 8:
+            raise ValueError("CAKE rates must be divisible by 8 bit/s")
+        if len({mark.device for mark in self.marks}) != len(self.marks):
+            raise ValueError("each device may have only one static service class")
+        if self.mode == "besteffort" and self.marks:
+            raise ValueError("besteffort mode does not accept device marks")
+        return self
+
+
 def _load(path: Path, model: type[ValueModel]) -> tuple[ValueModel, str]:
     try:
         if path.stat().st_size > 256 * 1024:
@@ -381,3 +407,8 @@ def load_config_bundle(config_dir: str | Path) -> ConfigBundle:
 def load_lab_config(path: str | Path) -> tuple[LabConfig, str]:
     """Runner-only topology loader; never called by the runtime controller loader."""
     return _load(Path(path), LabConfig)
+
+
+def load_static_profile(path: str | Path) -> StaticProfile:
+    profile, _ = _load(Path(path), StaticProfile)
+    return profile
